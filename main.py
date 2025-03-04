@@ -424,14 +424,16 @@ if "CS" not in st.session_state:
 # Calcul de la vitesse critique
 CS, D_prime_0 = calculate_critical_speed(distances, times)
 
+# Conversion de CS en km/h et en allure min/km
+CS_kmh = speed_m_s_to_kmh(CS)
+CS_pace = speed_to_pace(CS)
+
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
     if len(distances) >= 2 and len(times) >= 2:
         
 
-        # Conversion de CS en km/h et en allure min/km
-        CS_kmh = speed_m_s_to_kmh(CS)
-        CS_pace = speed_to_pace(CS)
+        
 
         # Stocker les valeurs dans session_state
         st.session_state.CS = CS
@@ -577,7 +579,8 @@ if st.session_state.fig is not None:
 # =============================================================================
 
 st.subheader("TELECHARGER LE RAPPORT PDF") # Partie
-    
+
+
 # Bouton télécharger
 pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path)
 
@@ -602,7 +605,7 @@ if st.download_button(
 if st.session_state.pdf_downloaded:
     st.success("PDF exporté avec succès")
 else : # Il n'y a pas assez de lignes pour tracer un graphe
-    st.error("Veuillez saisir des valeurs de saut.")
+    st.error("Le fichier PDF ne peut pas être exporté.")
  
 
 
