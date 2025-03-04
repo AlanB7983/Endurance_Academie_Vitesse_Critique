@@ -317,12 +317,14 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path) :
     CS_graph = Image(CS_graph_path)
     CS_graph.drawHeight = graph_width * CS_graph.drawHeight / CS_graph.drawWidth
     CS_graph.drawWidth = graph_width
+
+    elements.append(CS_graph)
     
     # Centrage du graphe via un tableau
-    table = Table([[CS_graph]], colWidths=[page_width - 2 * inch])
-    table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER')  # Centrer le graphe
-    ]))
+    # table = Table([[CS_graph]], colWidths=[page_width - 2 * inch])
+    # table.setStyle(TableStyle([
+    #     ('ALIGN', (0, 0), (-1, -1), 'CENTER')  # Centrer le graphe
+    # ]))
     
     elements.append(table)  # Ajout du graphe centré
 
