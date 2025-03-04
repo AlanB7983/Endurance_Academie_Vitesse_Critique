@@ -422,13 +422,6 @@ for i in range(num_points):
     times.append(t)
 
 
-# transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
-L_speeds = speeds.tolist()
-L_allures = []
-for i in range(0, len(L_speeds)) :
-    L_allures.append(speed_to_pace(float(L_speeds[i])))
-df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure moyenne [min/km]" : L_allures})
-
 # Vérifier si les variables existent dans session_state
 if "CS" not in st.session_state:
     st.session_state.CS = None
@@ -438,6 +431,13 @@ if "CS" not in st.session_state:
 
 # Calcul de la vitesse critique
 CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
+
+# Transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
+L_speeds = speeds.tolist()
+L_allures = []
+for i in range(0, len(L_speeds)) :
+    L_allures.append(speed_to_pace(float(L_speeds[i])))
+df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure moyenne [min/km]" : L_allures})
 
 # Conversion de CS en km/h et en allure min/km
 CS_kmh = speed_m_s_to_kmh(CS)
