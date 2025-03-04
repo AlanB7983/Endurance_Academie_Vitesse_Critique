@@ -8,3 +8,4 @@ kaleido
 scipy
 fonttools
 streamlit-aggrid
+sklearn
