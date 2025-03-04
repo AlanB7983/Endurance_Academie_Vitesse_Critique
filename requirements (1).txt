@@ -1,0 +1,10 @@
+streamlit
+matplotlib
+numpy
+plotly
+pandas
+reportlab
+kaleido
+scipy
+fonttools
+streamlit-aggrid
