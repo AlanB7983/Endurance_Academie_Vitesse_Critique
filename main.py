@@ -7,7 +7,7 @@ Created on Fri Feb 21 13:41:28 2025
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from sklearn.linear_model import LinearRegression
+
 import pandas as pd
 import os
 from scipy.stats import linregress
@@ -48,13 +48,12 @@ def calculate_critical_speed(distances, times):
     inverse_times = 1 / times  # Transformation en 1/t
 
     # Régression linéaire : V = CS + D'/t
-    model = LinearRegression()
-    model.fit(inverse_times.reshape(-1, 1), speeds)
+    slope, intercept, _, _, _ = linregress(inverse_times, speeds)
 
-    CS = model.intercept_  # Ordonnée à l'origine = vitesse critique
-    D_prime_0 = model.coef_[0]  # Pente = D'
+    CS = intercept  # Ordonnée à l'origine = vitesse critique
+    D_prime_0 = slope  # Pente = D'
 
-    return CS, D_prime_0, model
+    return CS, D_prime_0
 
 # Convertisseurs
 def speed_to_pace(speed_m_s):
@@ -423,7 +422,7 @@ if "CS" not in st.session_state:
     
 
 # Calcul de la vitesse critique
-CS, D_prime_0, model = calculate_critical_speed(distances, times)
+CS, D_prime_0 = calculate_critical_speed(distances, times)
 
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
