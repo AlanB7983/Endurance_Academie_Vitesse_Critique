@@ -361,9 +361,20 @@ pdfmetrics.registerFont(TTFont('StretchPro', 'Polices/StretchPro.ttf'))
 # INTERFACE STREAMLIT
 # =============================================================================
 
+# LOGO
+######
+
+col1_logo, col2_logo, col3_logo = st.columns([1, 2, 1])  # Ajuste les proportions
+
+with col1_logo:
+    st.image("Pictures/__LOGO_EA_ORANGE.png", use_container_width=True)
+
+
+
 st.title("Vitesse Critique (Critical Speed)")
 
-st.write("""
+with st.expander("Introduction et rappel des hypothèses") :
+    st.write("""
 La vitesse critique (VC) est un modèle mathématique utilisé pour estimer la frontière entre deux domaines d'intensité d'exercice : l’intensité élevée (où l'homéostasie est maintenue) et l’intensité sévère (où l'homéostasie est rompue et l'épuisement est inévitable). Ce modèle repose sur une relation hyperbolique entre la vitesse et la durée de l’effort, définissant une vitesse seuil soutenable sur une longue période.
 
 Le paramètre $D'$ représente une quantité de travail pouvant être effectuée au-delà de la vitesse critique avant d'atteindre l'épuisement. Plutôt que d’être une simple "réserve anaérobie", $D'$ est mieux décrit comme une capacité de travail finie issue de processus métaboliques non soutenables sur le long terme. Il inclut l’utilisation des phosphagènes (ATP-PCr), de la glycolyse anaérobie et potentiellement de contributions aérobie transitoires.
@@ -381,7 +392,7 @@ L’intensité sévère, où la demande énergétique excède les capacités oxy
 Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité anaérobie ($D'$)** à partir de tests de course.
 """)
 
-st.latex(r"V(t) = CS + \frac{D'}{t}")
+    st.latex(r"V(t) = CS + \frac{D'}{t}")
 
 
 
