@@ -310,10 +310,10 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path) :
     #elements.append(Spacer(1, 6))  # Ajouter un espace entre les graphes
   
     # On affiche le graphe d'évolution de l'effort dans la liaison boulonnée en fonction de l'effort extérieur dans le cas où la thermique est prise en compte
-    # scale_factor = 0.95  # Réduction de 5%
+    scale_factor = 0.8  # Réduction de 5%
 
     # Ajustement de la largeur et de la hauteur du graphe
-    graph_width = (page_width - 2 * inch)# * scale_factor
+    graph_width = (page_width - 2 * inch) * scale_factor
     CS_graph = Image(CS_graph_path)
     CS_graph.drawHeight = graph_width * CS_graph.drawHeight / CS_graph.drawWidth
     CS_graph.drawWidth = graph_width
