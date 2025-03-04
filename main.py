@@ -326,7 +326,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path) :
     #     ('ALIGN', (0, 0), (-1, -1), 'CENTER')  # Centrer le graphe
     # ]))
     
-    elements.append(table)  # Ajout du graphe centré
+    # elements.append(table)  # Ajout du graphe centré
 
     legend = Paragraph("Figure 1 : Courbe de vitesse critique", legend_style)
     elements.append(legend)
