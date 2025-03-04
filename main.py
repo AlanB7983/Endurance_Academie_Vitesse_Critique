@@ -53,7 +53,7 @@ def calculate_critical_speed(distances, times):
     CS = intercept  # Ordonnée à l'origine = vitesse critique
     D_prime_0 = slope  # Pente = D'
 
-    return CS, D_prime_0
+    return CS, D_prime_0, speeds
 
 # Convertisseurs
 def speed_to_pace(speed_m_s):
@@ -423,7 +423,10 @@ for i in range(num_points):
 
 
 # transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
-df_test = pd.DataFrame({"Distance": distances, "Temps": times})
+L_allures = []
+for i in range(0, len(speeds)) :
+    L_allures.append(speed_to_pace(speeds[i]))
+df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure moyenne [min/km]" : L_allures})
 
 # Vérifier si les variables existent dans session_state
 if "CS" not in st.session_state:
@@ -433,7 +436,7 @@ if "CS" not in st.session_state:
     
 
 # Calcul de la vitesse critique
-CS, D_prime_0 = calculate_critical_speed(distances, times)
+CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
 
 # Conversion de CS en km/h et en allure min/km
 CS_kmh = speed_m_s_to_kmh(CS)
