@@ -495,7 +495,14 @@ if st.button("Calculer la Vitesse Critique"):
         # ))
         
          
-        
+        # Ajout de la zone représentant D' sous forme de rectangle
+        fig.add_trace(go.Scatter(
+            x=[0, 300, 300, 0, 0],
+            y=[CS, CS, CS_5min, CS_5min, CS],
+            fill='toself', fillcolor='rgba(69, 62, 59, 0.3)',
+            line=dict(color='#453E3B', width=1),
+            name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
+        ))
         
 
         # Points expérimentaux
@@ -549,17 +556,10 @@ if st.button("Calculer la Vitesse Critique"):
             x=0.95, y=0.95, xanchor='right', yanchor='top',
             bordercolor='#453E3B', borderwidth=0.5
             ),
-        template="simple_white"
+        template="plotly_white"
         )
 
-        # Ajout de la zone représentant D' sous forme de rectangle
-        fig.add_trace(go.Scatter(
-            x=[0, 300, 300, 0, 0],
-            y=[CS, CS, CS_5min, CS_5min, CS],
-            fill='toself', fillcolor='rgba(69, 62, 59, 0.3)',
-            line=dict(color='#453E3B', width=1),
-            name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
-        ))
+        
 
         # Stocker le graphique dans session_state
         st.session_state.fig = fig
