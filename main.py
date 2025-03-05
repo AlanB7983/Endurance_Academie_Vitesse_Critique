@@ -431,7 +431,7 @@ if st.button("❓"):
 
 # Affichage du texte explicatif si le bouton est activé
 if st.session_state.show_help:
-    st.info("La vitesse critique est un modèle mathématique estimant la frontière entre les domaines d’intensité élevée et sévère.")
+    st.info("La vitesse critique est un modèle mathématique estimant la frontière entre les domaines d’intensité élevée et sévère !")
 
 
 
