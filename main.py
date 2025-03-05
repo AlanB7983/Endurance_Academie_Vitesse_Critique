@@ -464,13 +464,13 @@ if st.button("Calculer la Vitesse Critique"):
         fig = go.Figure()
         
         # Ajout des zones de couleur
-        # fig.add_trace(go.Scatter(
-        #     x=[0, 2000, 2000, 0],
-        #     y=[0.8*CS, 0.8*CS, 0.5*CS, 0.5*CS],
-        #     fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
-        #     line=dict(color='rgba(0,0,0,0)'),
-        #     showlegend=False
-        # ))
+        fig.add_trace(go.Scatter(
+            x=[0, 2000, 2000, 0],
+            y=[0.8*CS, 0.8*CS, 0.5*CS, 0.5*CS],
+            fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
+            line=dict(color='rgba(0,0,0,0)'),
+            showlegend=False
+        ))
         
         # fig.add_trace(go.Scatter(
         #     x=[0, 2000, 2000, 0],
