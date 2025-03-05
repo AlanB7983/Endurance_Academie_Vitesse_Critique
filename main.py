@@ -537,7 +537,7 @@ if st.button("Calculer la Vitesse Critique"):
         xaxis=dict(
             title = dict(text = "Temps (s)", font = dict(color = 'black')),
             showline=True,  # Afficher la barre de l'axe X
-            linecolor='black',  # Couleur de la barre de l'axe X
+            linecolor='black',  # Couleur de la barre de l'axe X 
             linewidth=0.5,  # Largeur de la barre de l'axe X
             range=[0, 2500], 
             showgrid=False,
@@ -558,8 +558,8 @@ if st.button("Calculer la Vitesse Critique"):
             x=0.95, y=0.95, xanchor='right', yanchor='top',
             bordercolor='#453E3B', borderwidth=0.5
             ),
-        # template="plotly_white"
-        template=None
+        template="plotly_white"
+        # template=None
         )
 
         
