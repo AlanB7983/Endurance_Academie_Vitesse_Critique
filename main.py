@@ -573,7 +573,8 @@ if st.session_state.CS is not None:
     st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
 
 if st.session_state.fig is not None:
-    st.plotly_chart(st.session_state.fig)
+    figure = st.session_state.fig
+    st.plotly_chart(figure)
     
     # On affiche la légende du graphe
     st.markdown(
@@ -588,7 +589,7 @@ if st.session_state.fig is not None:
     CS_graph_path = "Temp/CS_graph.png"
     save_dir = os.path.dirname(CS_graph_path)
     
-    st.session_state.fig.write_image(CS_graph_path, scale=4) #
+    figure.write_image(CS_graph_path, scale=4) #
     
 
 
