@@ -260,7 +260,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     
     
     # Ajout du titre
-    elements.append(Spacer(1, 12))  # Ajouter un espace après le titre
+    elements.append(Spacer(1, 24))  # Ajouter un espace après le titre
     title = Paragraph("BILAN DU TEST DE VITESSE CRITIQUE", title_style)
     elements.append(title)
     elements.append(Spacer(1, 12))  # Ajouter un espace après le titre
