@@ -457,48 +457,41 @@ if st.button("Calculer la Vitesse Critique"):
         st.session_state.D_prime_0 = D_prime_0
 
         # Génération des données pour la courbe
-        time_range = np.linspace(20, 2000, 200)  # Étendre jusqu'à 2500 s
+        time_range = np.linspace(20, 2500, 200)  # Étendre jusqu'à 2500 s
         speed_pred = CS + (D_prime_0 / time_range)  # Courbe hyperbolique
 
         # Création du graphique avec Plotly
         fig = go.Figure()
         
         # Ajout des zones de couleur
-        fig.add_trace(go.Scatter(
-            x=[-100, 2000, 2000, -100],
-            y=[0.8*CS, 0.8*CS, 0.4*CS, 0.4*CS],
-            fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[0.8*CS, 0.8*CS, 0.4*CS, 0.4*CS],
+        #     fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
-        fig.add_trace(go.Scatter(
-            x=[0, 2000, 2000, 0],
-            y=[CS, CS, 0.8*CS, 0.8*CS],
-            fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[CS, CS, 0.8*CS, 0.8*CS],
+        #     fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
-        fig.add_trace(go.Scatter(
-            x=[0, 2000, 2000, 0],
-            y=[max(speed_pred), max(speed_pred), CS, CS],
-            fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[max(speed_pred), max(speed_pred), CS, CS],
+        #     fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
         # Calcul du point CS_5min
         CS_5min = CS + (D_prime_0 / 300) 
         
-        # Ajout de la zone représentant D' sous forme de rectangle
-        fig.add_trace(go.Scatter(
-            x=[0, 300, 300, 0, 0],
-            y=[CS, CS, CS_5min, CS_5min, CS],
-            fill='toself', fillcolor='rgba(69, 62, 59, 0.3)',
-            line=dict(color='#453E3B', width=1),
-            name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
-        ))
+        
 
         # Points expérimentaux
         fig.add_trace(go.Scatter(
@@ -517,7 +510,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Asymptote horizontale (CS)
         fig.add_trace(go.Scatter(
-            x=[0, 2000], y=[CS, CS],
+            x=[0, 2500], y=[CS, CS],
             mode='lines', line=dict(color='#A8C686', width=2, dash='dash'),
             name=f"Vitesse Critique (CS) = {CS_pace}"
         ))
@@ -532,7 +525,7 @@ if st.button("Calculer la Vitesse Critique"):
             showline=True,  # Afficher la barre de l'axe X
             linecolor='black',  # Couleur de la barre de l'axe X
             linewidth=0.5,  # Largeur de la barre de l'axe X
-            range=[0, 2000], 
+            range=[0, 2500], 
             showgrid=False,
             tickformat='.0f',
             tickfont=dict(color='black')
@@ -554,7 +547,14 @@ if st.button("Calculer la Vitesse Critique"):
         template="simple_white"
         )
 
-        
+        # Ajout de la zone représentant D' sous forme de rectangle
+        fig.add_trace(go.Scatter(
+            x=[0, 300, 300, 0, 0],
+            y=[CS, CS, CS_5min, CS_5min, CS],
+            fill='toself', fillcolor='rgba(69, 62, 59, 0.3)',
+            line=dict(color='#453E3B', width=1),
+            name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
+        ))
 
         # Stocker le graphique dans session_state
         st.session_state.fig = fig
