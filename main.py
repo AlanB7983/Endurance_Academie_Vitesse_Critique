@@ -472,21 +472,21 @@ if st.button("Calculer la Vitesse Critique"):
             showlegend=False
         ))
         
-        # fig.add_trace(go.Scatter(
-        #     x=[0, 2000, 2000, 0],
-        #     y=[CS, CS, 0.8*CS, 0.8*CS],
-        #     fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
-        #     line=dict(color='rgba(0,0,0,0)'),
-        #     showlegend=False
-        # ))
+        fig.add_trace(go.Scatter(
+            x=[0, 2000, 2000, 0],
+            y=[CS, CS, 0.8*CS, 0.8*CS],
+            fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
+            line=dict(color='rgba(0,0,0,0)'),
+            showlegend=False
+        ))
         
-        # fig.add_trace(go.Scatter(
-        #     x=[0, 2000, 2000, 0],
-        #     y=[max(speed_pred), max(speed_pred), CS, CS],
-        #     fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
-        #     line=dict(color='rgba(0,0,0,0)'),
-        #     showlegend=False
-        # ))
+        fig.add_trace(go.Scatter(
+            x=[0, 2000, 2000, 0],
+            y=[max(speed_pred), max(speed_pred), CS, CS],
+            fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
+            line=dict(color='rgba(0,0,0,0)'),
+            showlegend=False
+        ))
         
         # Calcul du point CS_5min
         CS_5min = CS + (D_prime_0 / 300) 
@@ -531,7 +531,7 @@ if st.button("Calculer la Vitesse Critique"):
             title = dict(text = "Temps (s)", font = dict(color = 'black')),
             showline=True,  # Afficher la barre de l'axe X
             linecolor='black',  # Couleur de la barre de l'axe X
-            linewidth=1,  # Largeur de la barre de l'axe X
+            linewidth=0.5,  # Largeur de la barre de l'axe X
             range=[0, 2000], 
             showgrid=False,
             tickformat='.0f',
@@ -541,8 +541,8 @@ if st.button("Calculer la Vitesse Critique"):
             title = dict(text = "Vitesse (m/s)", font = dict(color = 'black')),
             showline=True,  # Afficher la barre de l'axe Y
             linecolor='black',  # Couleur de la barre de l'axe Y
-            linewidth=1,  # Largeur de la barre de l'axe Y
-            range=[0.5*CS, max(speed_pred)], 
+            linewidth=0.5,  # Largeur de la barre de l'axe Y
+            range=[0.5*CS, max(speed_pred)*0.8], 
             showgrid=False,
             tickformat='.1f',
             tickfont=dict(color='black')
