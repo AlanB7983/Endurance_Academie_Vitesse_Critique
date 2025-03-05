@@ -434,6 +434,12 @@ if "CS" not in st.session_state:
 # Calcul de la vitesse critique
 CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
 
+# Calcul du point CS_5min
+CS_5min = CS + (D_prime_0 / 300)
+
+# Calcul de l'indice de durabilité
+Durability = round((CS/CS_5min)*100,1)
+
 # Transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
 L_speeds = speeds.tolist()
 L_allures = []
@@ -488,8 +494,7 @@ if st.button("Calculer la Vitesse Critique"):
         #     showlegend=False
         # ))
         
-        # Calcul du point CS_5min
-        CS_5min = CS + (D_prime_0 / 300) 
+         
         
         
 
@@ -570,6 +575,12 @@ if st.session_state.CS is not None:
     st.success(f"✅ Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
     st.write(f"📌 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
     st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
+    st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
+    if Durability > 90 :
+        st.write("📌 Profil endurant")
+    else :
+        st.write("📌 Profil rapide")
+    
 
 if st.session_state.fig is not None:
     figure = st.session_state.fig
