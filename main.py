@@ -531,6 +531,11 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Mise en forme du graphique
         fig.update_layout(
+        autosize=False,  # Désactive l'ajustement automatique de la taille
+        width=800,  # Largeur fixe du graphe
+        height=600,  # Hauteur fixe du graphe
+        plot_bgcolor='white',  # Fond du graphe en blanc pour éviter des problèmes de rendu
+        paper_bgcolor='white',  # Fond du "papier" du graphe en blanc aussi
         margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
         # plot_bgcolor="rgba(0,0,0,0)",  # Fond du graphe transparent
         # paper_bgcolor="rgba(0,0,0,0)",  # Fond extérieur transparent
@@ -587,7 +592,7 @@ if st.session_state.CS is not None:
 
 if st.session_state.fig is not None:
     figure = st.session_state.fig
-    st.plotly_chart(figure)
+    st.plotly_chart(figure, use_container_width=False)
     
     # On affiche la légende du graphe
     st.markdown(
