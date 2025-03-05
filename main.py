@@ -632,7 +632,7 @@ st.subheader("TELECHARGER LE RAPPORT PDF") # Partie
 
 
 # Bouton télécharger
-pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path)
+pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability)
 
 
 # Champ pour le nom du fichier
