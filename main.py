@@ -334,18 +334,18 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(Spacer(1, 12))  # Ajouter un espace entre les graphes
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
-    text = Paragraph("La vitesse critique de l'athlète est de " + str(CS_kmh) + " km/h, soit " + str(CS_pace) + " min/km.", normal_style)
+    text = Paragraph("La **vitesse critique** de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + " min/km. Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
     elements.append(text)
-    text = Paragraph("Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
+    # text = Paragraph("Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
+    # elements.append(text)
+    text = Paragraph("La résèrve anaérobie D' correspondante est de " + str(round(D_prime_0, 1)) + " m.", normal_style)
     elements.append(text)
-    text = Paragraph("La résèrve anaérobie D' correspondante est de " + str(D_prime_0) + " m.", normal_style)
-    elements.append(text)
-    text = Paragraph("L'indice de durabilité, calculé à partir de la vitesse limite sur 5 minutes et de la vitesse critique, est de " + str(Durability) + " %.", normal_style)
+    text = Paragraph("L'**indice de durabilité**, calculé à partir de la vitesse limite sur 5 minutes et de la vitesse critique, est de " + str(Durability) + " %.", normal_style)
     elements.append(text)
     if Durability > 90 :
-        text = Paragraph("Le profil obtenu est plutôt ENDURANT.", normal_style)
+        text = Paragraph("Le profil obtenu est plutôt **ENDURANT**.", normal_style)
     else :
-        text = Paragraph("Le profil obtenu est plutôt RAPIDE.", normal_style)
+        text = Paragraph("Le profil obtenu est plutôt **RAPIDE**.", normal_style)
     elements.append(text)
 
     
