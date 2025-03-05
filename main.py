@@ -464,29 +464,29 @@ if st.button("Calculer la Vitesse Critique"):
         fig = go.Figure()
         
         # Ajout des zones de couleur
-        fig.add_trace(go.Scatter(
-            x=[0, 2000, 2000, 0],
-            y=[0.8*CS, 0.8*CS, 0.5*CS, 0.5*CS],
-            fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[0.8*CS, 0.8*CS, 0.5*CS, 0.5*CS],
+        #     fill='toself', fillcolor='rgba(168, 198, 134, 0.3)', #'rgba(168, 198, 134, 0.3)'
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
-        fig.add_trace(go.Scatter(
-            x=[0, 2000, 2000, 0],
-            y=[CS, CS, 0.8*CS, 0.8*CS],
-            fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[CS, CS, 0.8*CS, 0.8*CS],
+        #     fill='toself', fillcolor='rgba(255, 179, 71, 0.3)',
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
-        fig.add_trace(go.Scatter(
-            x=[0, 2000, 2000, 0],
-            y=[max(speed_pred), max(speed_pred), CS, CS],
-            fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
-            line=dict(color='rgba(0,0,0,0)'),
-            showlegend=False
-        ))
+        # fig.add_trace(go.Scatter(
+        #     x=[0, 2000, 2000, 0],
+        #     y=[max(speed_pred), max(speed_pred), CS, CS],
+        #     fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',
+        #     line=dict(color='rgba(0,0,0,0)'),
+        #     showlegend=False
+        # ))
         
         # Calcul du point CS_5min
         CS_5min = CS + (D_prime_0 / 300) 
@@ -531,18 +531,18 @@ if st.button("Calculer la Vitesse Critique"):
             #yaxis_title="Vitesse (km/h)",
             xaxis=dict(
                 title = dict(text = "Temps (s)", font = dict(color = 'black')),
-                #linewidth=1,  # Largeur de la barre de l'axe X
+                linewidth=1,  # Largeur de la barre de l'axe X
                 range=[0, 2000], 
-                #showline=True,  # Afficher la barre de l'axe X
+                showline=True,  # Afficher la barre de l'axe X
                 showgrid=False,
                 tickformat='.0f',
                 tickfont=dict(color='black')
                 ),
             yaxis=dict(
                 title = dict(text = "Vitesse (m/s)", font = dict(color = 'black')),
-                #linewidth=1,  # Largeur de la barre de l'axe X
+                linewidth=1,  # Largeur de la barre de l'axe X
                 range=[0.5*CS, max(speed_pred)], 
-                #showline=True,  # Afficher la barre de l'axe X
+                showline=True,  # Afficher la barre de l'axe X
                 showgrid=False,
                 tickformat='.1f',
                 tickfont=dict(color='black')
