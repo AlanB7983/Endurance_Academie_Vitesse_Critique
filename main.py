@@ -315,7 +315,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path) :
     # Ajustement de la largeur et de la hauteur du graphe 
     graph_width = (page_width - 2 * inch) # * scale_factor
     CS_graph = Image(CS_graph_path)
-    CS_graph.drawHeight = graph_width * (CS_graph.drawHeight / CS_graph.drawWidth) * 0.9
+    CS_graph.drawHeight = graph_width * (CS_graph.drawHeight / CS_graph.drawWidth) * 0.8
     CS_graph.drawWidth = graph_width
 
     elements.append(CS_graph)
