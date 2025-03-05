@@ -543,7 +543,7 @@ if st.button("Calculer la Vitesse Critique"):
             showline=True,  # Afficher la barre de l'axe Y
             linecolor='black',  # Couleur de la barre de l'axe Y
             linewidth=1,  # Largeur de la barre de l'axe Y
-            #range=[0.5*CS, max(speed_pred)], 
+            range=[0.5*CS, max(speed_pred)], 
             showgrid=False,
             tickformat='.1f',
             tickfont=dict(color='black')
