@@ -587,7 +587,7 @@ if st.session_state.fig is not None:
     CS_graph_path = "Temp/CS_graph.png"
     save_dir = os.path.dirname(CS_graph_path)
     
-    st.session_state.fig.write_image(CS_graph_path) #, scale=4
+    st.session_state.fig.write_image(CS_graph_path, scale=4) #
     
 
 
