@@ -532,8 +532,8 @@ if st.button("Calculer la Vitesse Critique"):
         # Mise en forme du graphique
         fig.update_layout(
         margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
-        plot_bgcolor="rgba(0,0,0,0)",  # Fond du graphe transparent
-        paper_bgcolor="rgba(0,0,0,0)",  # Fond extérieur transparent
+        # plot_bgcolor="rgba(0,0,0,0)",  # Fond du graphe transparent
+        # paper_bgcolor="rgba(0,0,0,0)",  # Fond extérieur transparent
         xaxis=dict(
             title = dict(text = "Temps (s)", font = dict(color = 'black')),
             showline=True,  # Afficher la barre de l'axe X
@@ -558,7 +558,8 @@ if st.button("Calculer la Vitesse Critique"):
             x=0.95, y=0.95, xanchor='right', yanchor='top',
             bordercolor='#453E3B', borderwidth=0.5
             ),
-        template="plotly_white"
+        # template="plotly_white"
+        template=None
         )
 
         
