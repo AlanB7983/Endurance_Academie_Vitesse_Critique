@@ -533,7 +533,7 @@ if st.button("Calculer la Vitesse Critique"):
         fig.update_layout(
         autosize=False,  # Désactive l'ajustement automatique de la taille
         width=800,  # Largeur fixe du graphe
-        height=600,  # Hauteur fixe du graphe
+        height=400,  # Hauteur fixe du graphe
         plot_bgcolor='white',  # Fond du graphe en blanc pour éviter des problèmes de rendu
         paper_bgcolor='white',  # Fond du "papier" du graphe en blanc aussi
         margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
