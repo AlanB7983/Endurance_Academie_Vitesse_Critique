@@ -499,8 +499,8 @@ if st.button("Calculer la Vitesse Critique"):
         fig.add_trace(go.Scatter(
             x=[0, 300, 300, 0, 0],
             y=[CS, CS, CS_5min, CS_5min, CS],
-            fill='toself', fillcolor='rgba(69, 62, 59, 0.3)',
-            line=dict(color='#453E3B', width=1),
+            fill='toself', fillcolor='rgba(168, 198, 134, 0.3)',# 'rgba(69, 62, 59, 0.3)',
+            line=dict(color='#A8C686', width=1),
             name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
         ))
         
