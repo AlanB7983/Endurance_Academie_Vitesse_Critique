@@ -420,6 +420,21 @@ Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité a
 st.write("")
 st.subheader("CALCUL DE LA VITESSE CRITIQUE (CS)")
 
+
+# Crée un état pour stocker l'affichage de l'aide
+if "show_help" not in st.session_state:
+    st.session_state.show_help = False
+
+# Bouton pour afficher/masquer l'aide
+if st.button("❓"):
+    st.session_state.show_help = not st.session_state.show_help
+
+# Affichage du texte explicatif si le bouton est activé
+if st.session_state.show_help:
+    st.info("La vitesse critique est un modèle mathématique estimant la frontière entre les domaines d’intensité élevée et sévère.")
+
+
+
 # Sélection du nombre de tests
 num_points = st.radio("Nombre de tests à entrer :", [2, 3], horizontal = True)
 
