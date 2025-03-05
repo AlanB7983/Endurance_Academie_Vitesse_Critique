@@ -526,32 +526,33 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Mise en forme du graphique
         fig.update_layout(
-            margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
-            #xaxis_title="Temps (s)",
-            #yaxis_title="Vitesse (km/h)",
-            xaxis=dict(
-                title = dict(text = "Temps (s)", font = dict(color = 'black')),
-                linewidth=1,  # Largeur de la barre de l'axe X
-                range=[0, 2000], 
-                showline=True,  # Afficher la barre de l'axe X
-                showgrid=False,
-                tickformat='.0f',
-                tickfont=dict(color='black')
-                ),
-            yaxis=dict(
-                title = dict(text = "Vitesse (m/s)", font = dict(color = 'black')),
-                linewidth=1,  # Largeur de la barre de l'axe X
-                range=[0.5*CS, max(speed_pred)], 
-                showline=True,  # Afficher la barre de l'axe X
-                showgrid=False,
-                tickformat='.1f',
-                tickfont=dict(color='black')
-                ),
-            legend=dict(
-                x=0.95, y=0.95, xanchor='right', yanchor='top',
-                bordercolor='#453E3B', borderwidth=0.5
-                )
-            # template="simple_white"
+        margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
+        xaxis=dict(
+            title = dict(text = "Temps (s)", font = dict(color = 'black')),
+            showline=True,  # Afficher la barre de l'axe X
+            linecolor='black',  # Couleur de la barre de l'axe X
+            linewidth=1,  # Largeur de la barre de l'axe X
+            #range=[0, 2000], 
+            #showline=True,  # Afficher la barre de l'axe X
+            showgrid=False,
+            tickformat='.0f',
+            tickfont=dict(color='black')
+            ),
+        yaxis=dict(
+            title = dict(text = "Vitesse (m/s)", font = dict(color = 'black')),
+            showline=True,  # Afficher la barre de l'axe Y
+            linecolor='black',  # Couleur de la barre de l'axe Y
+            linewidth=1,  # Largeur de la barre de l'axe Y
+            #range=[0.5*CS, max(speed_pred)], 
+            showgrid=False,
+            tickformat='.1f',
+            tickfont=dict(color='black')
+            ),
+        legend=dict(
+            x=0.95, y=0.95, xanchor='right', yanchor='top',
+            bordercolor='#453E3B', borderwidth=0.5
+            ),
+        template="simple_white"
         )
 
         
