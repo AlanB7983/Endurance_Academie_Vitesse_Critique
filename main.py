@@ -177,7 +177,7 @@ def generate_training_zone_graph(pace_values):
         name="RPE 9-10", showlegend=False
     ))
     fig.add_annotation(
-        x=9.5, y=-0.12, text=rpe_values[4], showarrow=False, font=dict(size=12, color=rpe_colors[4])
+        x=9.5, y=-0.2, text=rpe_values[4], showarrow=False, font=dict(size=12, color=rpe_colors[4])
     )
     
     
@@ -191,10 +191,7 @@ def generate_training_zone_graph(pace_values):
         xaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
         template="simple_white",
-        legend=dict(
-            x=0.95, y=0.95, xanchor='right', yanchor='top',
-            bordercolor='#453E3B', borderwidth=0.5
-            ),
+        showlegend=False
     )
 
     return fig
@@ -781,12 +778,15 @@ if st.session_state.CS is not None:
     st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
+    LT2_pace_without_unit = LT2_pace[:7]
     LT1_speed = 0.8*CS
     LT1_pace = speed_to_pace(LT1_speed)
+    LT1_pace_without_unit = LT1_pace[:7]
+    CS_pace_without_unit = CS_pace[:7]
     pace_values = {
-        "LT1 / VT1": LT1_pace,
-        "LT2": LT2_pace,
-        "VC": CS_pace
+        "LT1 / VT1": LT1_pace_without_unit,
+        "LT2": LT2_pace_without_unit,
+        "VC": CS_pace_without_unit
     }
     fig_domaines = generate_training_zone_graph(pace_values)
     st.plotly_chart(fig_domaines, use_container_width=False)
