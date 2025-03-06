@@ -67,6 +67,130 @@ def speed_m_s_to_kmh(speed_m_s):
     """Convertit une vitesse en m/s en km/h."""
     return speed_m_s * 3.6
 
+def generate_training_zone_graph(pace_values):
+    """
+    Génère un graphique des zones d'entraînement avec allure (min/km),
+    fréquence cardiaque et échelle RPE.
+
+    Parameters:
+    - pace_values (dict): Dictionnaire contenant les valeurs des seuils
+      Exemple:
+      {
+          "seuil_1": "5:45",
+          "seuil_bas": "5:00",
+          "seuil_haut": "4:35",
+          "zone1_fc": 150
+      }
+    """
+    
+    fig = go.Figure()
+
+    # Ajout des zones colorées (Z1, Z2, Z3, Z4)
+    fig.add_trace(go.Scatter(
+        x=[0, 4, 4, 0], y=[0, 0, 1, 1],
+        fill="toself", fillcolor="rgba(168, 198, 134, 0.8)", line=dict(color="rgba(0,0,0,0)"),
+        name="Domaine modéré", showlegend=False
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=[4, 7, 7, 4], y=[0, 0, 1, 1],
+        fill="toself", fillcolor="rgba(248, 201, 0, 0.8)", line=dict(color="rgba(0,0,0,0)"),
+        name="Domaine élevé", showlegend=False
+    ))
+    
+    fig.add_trace(go.Scatter(
+        x=[7, 7.5, 7.5, 7], y=[0, 0, 1, 1],
+        fill="toself", fillcolor="rgba(242, 123, 0, 0.8)", line=dict(color="rgba(0,0,0,0)"), # ou rgba(236, 182, 0, 0.8)
+        name="Domaine très élevé", showlegend=False
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=[7.5, 9, 9, 7.5], y=[0, 0, 1, 1],
+        fill="toself", fillcolor="rgba(170, 61, 0, 0.8)", line=dict(color="rgba(0,0,0,0)"),
+        name="Domaine sevère", showlegend=False
+    ))
+    
+    fig.add_trace(go.Scatter(
+        x=[9, 10, 10, 9], y=[0, 0, 1, 1],
+        fill="toself", fillcolor="rgba(69, 62, 59, 0.8)", line=dict(color="rgba(0,0,0,0)"),
+        name="Domaine extrême", showlegend=False
+    ))
+
+    # Ajout des lignes verticales pour les seuils
+    L_i = [4, 7, 7.5]
+    for i, (label, pace) in enumerate(pace_values.items()):
+        indice = L_i[i]
+        fig.add_trace(go.Scatter(
+            x=[indice, indice], y=[-0.02, 1.02],
+            mode="lines", line=dict(color="black", dash="dot"),
+            name=label
+        ))
+        fig.add_annotation(
+            x=indice, y=1.05, text=f"{label}<br>{pace}", showarrow=False,
+            font=dict(size=12, color="black")
+        )
+
+
+    # Ajout de l'échelle RPE en bas
+    rpe_values = ["0-4", "4-7", "7-7.5", "7.5-9", "9-10"]
+    rpe_colors = ["#A8C686", "#F8C900", "#F27B00", "#AA3D00", "#453E3B"]
+    
+    fig.add_trace(go.Scatter(
+        x=[0, 4], y=[-0.1, -0.1],
+        mode="lines", line=dict(color=rpe_colors[0], width=3),
+        name="RPE 0-4", showlegend=False
+    ))
+    fig.add_annotation(
+        x=2, y=-0.12, text=rpe_values[0], showarrow=False, font=dict(size=12, color=rpe_colors[0])
+    )
+    
+    fig.add_trace(go.Scatter(
+        x=[4, 7], y=[-0.1, -0.1],
+        mode="lines", line=dict(color=rpe_colors[1], width=3),
+        name="RPE 4-7", showlegend=False
+    ))
+    fig.add_annotation(
+        x=5.5, y=-0.12, text=rpe_values[1], showarrow=False, font=dict(size=12, color=rpe_colors[1])
+    )
+    
+    fig.add_trace(go.Scatter(
+        x=[7, 7.5], y=[-0.1, -0.1],
+        mode="lines", line=dict(color=rpe_colors[2], width=3),
+        name="RPE 7-7.5", showlegend=False
+    ))
+    fig.add_annotation(
+        x=7.25, y=-0.12, text=rpe_values[2], showarrow=False, font=dict(size=12, color=rpe_colors[2])
+    )
+    
+    fig.add_trace(go.Scatter(
+        x=[7.5, 9], y=[-0.1, -0.1],
+        mode="lines", line=dict(color=rpe_colors[3], width=3),
+        name="RPE 7.5-9", showlegend=False
+    ))
+    fig.add_annotation(
+        x=8.25, y=-0.12, text=rpe_values[3], showarrow=False, font=dict(size=12, color=rpe_colors[3])
+    )
+    
+    fig.add_trace(go.Scatter(
+        x=[9, 10], y=[-0.1, -0.1],
+        mode="lines", line=dict(color=rpe_colors[4], width=3),
+        name="RPE 9-10", showlegend=False
+    ))
+    fig.add_annotation(
+        x=9.5, y=-0.12, text=rpe_values[4], showarrow=False, font=dict(size=12, color=rpe_colors[4])
+    )
+    
+    
+
+    # Mise en forme générale
+    fig.update_layout(
+        margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
+        xaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
+        template="simple_white"
+    )
+
+    return fig
 
 
 # Fonction pour calculer l'évolution de D' en fonction du temps
@@ -664,9 +788,22 @@ if st.session_state.fig is not None:
     CS_graph_path = "Temp/CS_graph.png"
     save_dir = os.path.dirname(CS_graph_path)
     
-    figure.write_image(CS_graph_path, scale=4) #
+    figure.write_image(CS_graph_path, scale=4) 
     
-
+# Affichage des domaines d'intensité type
+if st.session_state.CS is not None:
+    st.write("Un point de départ des domaines d'intensité de l'athlète sont les suivants.")
+    LT2_speed = 0.95*CS
+    LT2_pace = speed_to_pace(LT2_speed)
+    LT1_speed = 0.8*CS
+    LT1_pace = speed_to_pace(LT1_speed)
+    pace_values = {
+        "LT1 / VT1": LT1_pace,
+        "LT2": LT2_pace,
+        "VC": CS_pace
+    }
+    fig = generate_training_zone_graph(pace_values)
+    fig.show()
 
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
