@@ -472,15 +472,18 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     text = Paragraph("L'indice de durabilité, calculé à partir de la vitesse limite sur 5 minutes et de la vitesse critique, est de " + str(Durability) + " %.", normal_style)
     elements.append(text)
     if Durability > 90 :
-        text = Paragraph("Le profil obtenu est plutôt **ENDURANT**.", normal_style)
+        text = Paragraph("Le profil obtenu est plutôt ENDURANT.", normal_style)
     else :
-        text = Paragraph("Le profil obtenu est plutôt **RAPIDE**.", normal_style)
+        text = Paragraph("Le profil obtenu est plutôt RAPIDE.", normal_style)
     elements.append(text)
 
     # On affiche le graphe d'évolution de l'effort dans la liaison boulonnée en fonction de l'effort extérieur dans le cas où la thermique est prise en compte
     # scale_factor = 0.8  # Réduction de 5%
 
-    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+
+    # Saut de page
+    elements.append(PageBreak())
+    elements.append(Spacer(1, 24))  # Ajouter un espace après le titre
 
     text = Paragraph("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).", normal_style)
     elements.append(text)                 
@@ -860,7 +863,7 @@ if st.session_state.CS is not None:
     Domaines_graph_path = "Temp/Domaines_graph.png"
     save_dir = os.path.dirname(Domaines_graph_path)
     
-    figure.write_image(Domaines_graph_path, scale=4) 
+    fig_domaines.write_image(Domaines_graph_path, scale=4) 
     
 
 
