@@ -184,10 +184,17 @@ def generate_training_zone_graph(pace_values):
 
     # Mise en forme générale
     fig.update_layout(
+        autosize=False,  # Désactive l'ajustement automatique de la taille
+        width=800,  # Largeur fixe du graphe
+        height=400,  # Hauteur fixe du graphe
         margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
         xaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
-        template="simple_white"
+        template="simple_white",
+        legend=dict(
+            x=0.95, y=0.95, xanchor='right', yanchor='top',
+            bordercolor='#453E3B', borderwidth=0.5
+            ),
     )
 
     return fig
