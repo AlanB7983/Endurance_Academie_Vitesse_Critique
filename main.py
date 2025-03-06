@@ -121,12 +121,12 @@ def generate_training_zone_graph(pace_values):
     for i, (label, pace) in enumerate(pace_values.items()):
         indice = L_i[i]
         fig.add_trace(go.Scatter(
-            x=[indice, indice], y=[-0.02, 1.02],
+            x=[indice, indice], y=[-0.1, 1.1],
             mode="lines", line=dict(color="black", dash="dot"),
             name=label
         ))
         fig.add_annotation(
-            x=indice, y=1.05, text=f"{label}<br>{pace}", showarrow=False,
+            x=indice, y=1.25, text=f"{label}<br>{pace}", showarrow=False,
             font=dict(size=12, color="black")
         )
 
@@ -141,7 +141,7 @@ def generate_training_zone_graph(pace_values):
         name="RPE 0-4", showlegend=False
     ))
     fig.add_annotation(
-        x=2, y=-0.12, text=rpe_values[0], showarrow=False, font=dict(size=12, color=rpe_colors[0])
+        x=2, y=-0.2, text=rpe_values[0], showarrow=False, font=dict(size=12, color=rpe_colors[0])
     )
     
     fig.add_trace(go.Scatter(
@@ -150,7 +150,7 @@ def generate_training_zone_graph(pace_values):
         name="RPE 4-7", showlegend=False
     ))
     fig.add_annotation(
-        x=5.5, y=-0.12, text=rpe_values[1], showarrow=False, font=dict(size=12, color=rpe_colors[1])
+        x=5.5, y=-0.2, text=rpe_values[1], showarrow=False, font=dict(size=12, color=rpe_colors[1])
     )
     
     fig.add_trace(go.Scatter(
@@ -159,7 +159,7 @@ def generate_training_zone_graph(pace_values):
         name="RPE 7-7.5", showlegend=False
     ))
     fig.add_annotation(
-        x=7.25, y=-0.12, text=rpe_values[2], showarrow=False, font=dict(size=12, color=rpe_colors[2])
+        x=7.25, y=-0.2, text=rpe_values[2], showarrow=False, font=dict(size=12, color=rpe_colors[2])
     )
     
     fig.add_trace(go.Scatter(
@@ -168,7 +168,7 @@ def generate_training_zone_graph(pace_values):
         name="RPE 7.5-9", showlegend=False
     ))
     fig.add_annotation(
-        x=8.25, y=-0.12, text=rpe_values[3], showarrow=False, font=dict(size=12, color=rpe_colors[3])
+        x=8.25, y=-0.2, text=rpe_values[3], showarrow=False, font=dict(size=12, color=rpe_colors[3])
     )
     
     fig.add_trace(go.Scatter(
