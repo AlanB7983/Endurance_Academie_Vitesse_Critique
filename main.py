@@ -769,6 +769,20 @@ if st.session_state.CS is not None:
         st.write("📌 Profil endurant")
     else :
         st.write("📌 Profil rapide")
+
+
+    st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
+    LT2_speed = 0.95*CS
+    LT2_pace = speed_to_pace(LT2_speed)
+    LT1_speed = 0.8*CS
+    LT1_pace = speed_to_pace(LT1_speed)
+    pace_values = {
+        "LT1 / VT1": LT1_pace,
+        "LT2": LT2_pace,
+        "VC": CS_pace
+    }
+    fig_domaines = generate_training_zone_graph(pace_values)
+    st.plotly_chart(fig_domaines, use_container_width=False)
     
 
 if st.session_state.fig is not None:
@@ -791,19 +805,19 @@ if st.session_state.fig is not None:
     figure.write_image(CS_graph_path, scale=4) 
     
 # Affichage des domaines d'intensité type
-if st.session_state.CS is not None:
-    st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
-    LT2_speed = 0.95*CS
-    LT2_pace = speed_to_pace(LT2_speed)
-    LT1_speed = 0.8*CS
-    LT1_pace = speed_to_pace(LT1_speed)
-    pace_values = {
-        "LT1 / VT1": LT1_pace,
-        "LT2": LT2_pace,
-        "VC": CS_pace
-    }
-    fig = generate_training_zone_graph(pace_values)
-    fig.show()
+#if st.session_state.CS is not None:
+#    st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
+#    LT2_speed = 0.95*CS
+#    LT2_pace = speed_to_pace(LT2_speed)
+#    LT1_speed = 0.8*CS
+#    LT1_pace = speed_to_pace(LT1_speed)
+#    pace_values = {
+#        "LT1 / VT1": LT1_pace,
+#        "LT2": LT2_pace,
+#        "VC": CS_pace
+#    }
+#    fig = generate_training_zone_graph(pace_values)
+#    fig.show()
 
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
