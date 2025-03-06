@@ -359,6 +359,19 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 # =============================================================================
 # PREREQUIS POUR LA CREATION DU PDF
 # =============================================================================
@@ -369,6 +382,11 @@ pdfmetrics.registerFont(TTFont("Athelas-Italic", "Polices/Athelas-Italic-02.ttf"
 
 # Enregistrer ta police StretchPro
 pdfmetrics.registerFont(TTFont('StretchPro', 'Polices/StretchPro.ttf'))
+
+
+
+
+
 
 
 
@@ -445,9 +463,20 @@ times = []
 for i in range(num_points):
     col1, col2 = st.columns(2)
     with col1:
-        d = st.number_input(f"Distance {i+1} (m)", min_value=0, step=100, key=f"d_{i}")
+        d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
     with col2:
-        t = st.number_input(f"Temps {i+1} (s)", min_value=1, step=1, key=f"t_{i}")
+        t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+
+    # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+    if len(d) == 0 :
+        d = 1000
+    else :
+        d = float(d)
+
+    if len(t) == 0 :
+        t = 180
+    else :
+        t = float(t)
     
     distances.append(d)
     times.append(t)
@@ -483,9 +512,6 @@ CS_pace = speed_to_pace(CS)
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
     if len(distances) >= 2 and len(times) >= 2:
-        
-
-        
 
         # Stocker les valeurs dans session_state
         st.session_state.CS = CS
@@ -604,7 +630,8 @@ if st.button("Calculer la Vitesse Critique"):
 
     else:
         st.error("❌ Veuillez entrer au moins deux points pour le calcul.")
-        
+else :
+    st.info("Appuyez sur le bouton pour générer les résultats.")
         
 
 # Affichage des résultats enregistrés
