@@ -464,19 +464,20 @@ for i in range(num_points):
     col1, col2 = st.columns(2)
     with col1:
         d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+        
+        # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+        if len(d) == 0 :
+            d = 1000
+        else :
+            d = float(d)
+            
     with col2:
         t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
 
-    # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
-    if len(d) == 0 :
-        d = 1000
-    else :
-        d = float(d)
-
-    if len(t) == 0 :
-        t = 180
-    else :
-        t = float(t)
+        if len(t) == 0 :
+            t = 180
+        else :
+            t = float(t)
     
     distances.append(d)
     times.append(t)
