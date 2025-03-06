@@ -338,7 +338,7 @@ def header_footer(canvas, doc):
     
     
     
-def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability) :
+def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path) :
     buffer = BytesIO()
     
     
@@ -477,6 +477,23 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
         text = Paragraph("Le profil obtenu est plutôt **RAPIDE**.", normal_style)
     elements.append(text)
 
+    # On affiche le graphe d'évolution de l'effort dans la liaison boulonnée en fonction de l'effort extérieur dans le cas où la thermique est prise en compte
+    # scale_factor = 0.8  # Réduction de 5%
+
+    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+
+    text = Paragraph("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).", normal_style)
+    elements.append(text)                 
+    
+    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+    
+    # Ajustement de la largeur et de la hauteur du graphe 
+    Domaines_graph = Image(Domaines_graph_path)
+    Domaines_graph.drawHeight = graph_width * Domaines_graph.drawHeight / Domaines_graph.drawWidth
+    Domaines_graph.drawWidth = graph_width
+
+    elements.append(Domaines_graph)
+
     
     # Génération du PDF
     doc.build(elements, onFirstPage=header_footer, onLaterPages=header_footer)
@@ -533,7 +550,12 @@ with col1_logo:
 
 
 
-st.title("Vitesse Critique (Critical Speed)")
+st.header("VITESSE CRITIQUE (CRITICAL SPEED)")
+
+# saut de ligne
+st.write("\n")
+# saut de ligne
+st.write("\n")
 
 with st.expander("Définition et hypothèses") :
     st.write(r"""
@@ -563,10 +585,19 @@ Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité a
 # CALCUL DE LA VITESSE CRITIQUE (CS)
 # =============================================================================
 
-st.write("")
+# saut de ligne
+st.write("\n")
+# saut de ligne
+st.write("\n")
+
 st.subheader("CALCUL DE LA VITESSE CRITIQUE (CS)")
 
+# saut de ligne
+st.write("\n")
 
+st.write("Saisie des données de test")
+
+         
 # Crée un état pour stocker l'affichage de l'aide
 if "show_help" not in st.session_state:
     st.session_state.show_help = False
@@ -763,8 +794,10 @@ else :
     st.info("Appuyez sur le bouton pour générer les résultats.")
         
 
+st.write("\n\n")  # Deux lignes vides
 
-    
+st.write("Résultats du test de vitesse critique") 
+st.write("\n")  # Une lignes vides
 
 if st.session_state.fig is not None:
     figure = st.session_state.fig
@@ -835,11 +868,11 @@ if st.session_state.CS is not None:
 # TELECHARGER LE RAPPORT PDF
 # =============================================================================
 
-st.subheader("TELECHARGER LE RAPPORT PDF") # Partie
+st.write("Télécharger le rapport pdf") # Partie
 
 
 # Bouton télécharger
-pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability)
+pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path)
 
 
 # Champ pour le nom du fichier
