@@ -186,7 +186,7 @@ def generate_training_zone_graph(pace_values):
     fig.update_layout(
         autosize=False,  # Désactive l'ajustement automatique de la taille
         width=800,  # Largeur fixe du graphe
-        height=400,  # Hauteur fixe du graphe
+        height=200,  # Hauteur fixe du graphe
         margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
         xaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(visible=False),  # Supprime l'axe des X dict(showgrid=False, zeroline=False, showticklabels=False),
