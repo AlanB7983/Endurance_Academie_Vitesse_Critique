@@ -763,33 +763,7 @@ else :
     st.info("Appuyez sur le bouton pour générer les résultats.")
         
 
-# Affichage des résultats enregistrés
-if st.session_state.CS is not None:
-    st.success(f"✅ Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
-    st.write(f"📌 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
-    st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
-    st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
-    if Durability > 90 :
-        st.write("📌 Profil endurant")
-    else :
-        st.write("📌 Profil rapide")
 
-
-    st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
-    LT2_speed = 0.95*CS
-    LT2_pace = speed_to_pace(LT2_speed)
-    LT2_pace_without_unit = LT2_pace[:4]
-    LT1_speed = 0.8*CS
-    LT1_pace = speed_to_pace(LT1_speed)
-    LT1_pace_without_unit = LT1_pace[:4]
-    CS_pace_without_unit = CS_pace[:4]
-    pace_values = {
-        "LT1 / VT1": LT1_pace_without_unit,
-        "LT2": LT2_pace_without_unit,
-        "VC": CS_pace_without_unit
-    }
-    fig_domaines = generate_training_zone_graph(pace_values)
-    st.plotly_chart(fig_domaines, use_container_width=False)
     
 
 if st.session_state.fig is not None:
@@ -810,6 +784,51 @@ if st.session_state.fig is not None:
     save_dir = os.path.dirname(CS_graph_path)
     
     figure.write_image(CS_graph_path, scale=4) 
+
+
+# Affichage des résultats enregistrés
+if st.session_state.CS is not None:
+    st.success(f"✅ Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
+    st.write(f"📌 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
+    st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
+    st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
+    if Durability > 90 :
+        st.write("📌 Profil endurant")
+    else :
+        st.write("📌 Profil rapide")
+
+
+    st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
+    LT2_speed = 0.95*CS
+    LT2_pace = speed_to_pace(LT2_speed)
+    LT2_pace_without_unit = LT2_pace[:4]
+    LT1_speed = 0.8*CS
+    LT1_pace = speed_to_pace(LT1_speed)
+    LT1_pace_without_unit = LT1_pace[:4]
+    CS_pace_without_unit = CS_pace[:4]
+    pace_values = {
+        "LT1 / VT1": LT1_pace_without_unit,
+        "LT2": LT2_pace_without_unit,
+        "VC": CS_pace_without_unit
+    }
+    fig_domaines = generate_training_zone_graph(pace_values)
+    st.plotly_chart(fig_domaines, use_container_width=False)
+
+    # On affiche la légende du graphe
+    st.markdown(
+        "<p style='text-align: center; font-size:15px; color:darkgray; font-style:italic;'>"
+        "Domaines d'intensité de l'athlète"
+        "</p>",
+        unsafe_allow_html=True
+    )
+    st.write("\n\n")  # Deux lignes vides
+    
+    # Sauvegarder le graphe en tant qu'image
+    Domaines_graph_path = "Temp/Domaines_graph.png"
+    save_dir = os.path.dirname(Domaines_graph_path)
+    
+    figure.write_image(Domaines_graph_path, scale=4) 
+    
     
 # Affichage des domaines d'intensité type
 #if st.session_state.CS is not None:
