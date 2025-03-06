@@ -778,11 +778,11 @@ if st.session_state.CS is not None:
     st.write("Un point de départ des domaines d'intensité de l'athlète sont présentés ci-dessous.")
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
-    LT2_pace_without_unit = LT2_pace[:10]
+    LT2_pace_without_unit = LT2_pace[:4]
     LT1_speed = 0.8*CS
     LT1_pace = speed_to_pace(LT1_speed)
-    LT1_pace_without_unit = LT1_pace[:10]
-    CS_pace_without_unit = CS_pace[:10]
+    LT1_pace_without_unit = LT1_pace[:4]
+    CS_pace_without_unit = CS_pace[:4]
     pace_values = {
         "LT1 / VT1": LT1_pace_without_unit,
         "LT2": LT2_pace_without_unit,
