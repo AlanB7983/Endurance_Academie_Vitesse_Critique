@@ -521,7 +521,8 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
 
 
-
+# Configuration du titre de la page et du logo
+st.set_page_config(page_title="Vitesse Critique", page_icon="Pictures/__LOGO_EAICONE_NOIR.png")
 
 
 
