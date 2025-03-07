@@ -506,6 +506,8 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     Domaines_graph.drawWidth = page_width
 
     elements.append(Domaines_graph)
+    legend = Paragraph("Figure 2 : Domaines d'intensité de l'athlète", legend_style)
+    elements.append(legend)
 
     
     # Génération du PDF
