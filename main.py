@@ -659,6 +659,11 @@ if "CS" not in st.session_state:
     
 
 # Calcul de la vitesse critique
+# On initialise les valeurs
+CS = 3
+D_prime_0 = 100
+speeds = [0]
+# On met à jour en calculant avec les données de test
 CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
 
 # Calcul du point CS_5min
