@@ -48,7 +48,7 @@ def calculate_critical_speed(distances, times):
     inverse_times = 1 / times  # Transformation en 1/t
 
     # Régression linéaire : V = CS + D'/t s'il y a assez de valeur
-    if len(inverse_times) > 1 and times[0] != times[1]
+    if len(inverse_times) > 1 and times[0] != times[1] :
         slope, intercept, _, _, _ = linregress(inverse_times, speeds)
     
         CS = intercept  # Ordonnée à l'origine = vitesse critique
