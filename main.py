@@ -598,7 +598,7 @@ st.subheader("CALCUL DE LA VITESSE CRITIQUE (CS)")
 # saut de ligne
 st.write("\n")
 
-st.write("Saisie des données de test")
+st.markdown("### Saisie des données de test")
 
          
 # Crée un état pour stocker l'affichage de l'aide
@@ -799,7 +799,7 @@ else :
 
 st.write("\n\n")  # Deux lignes vides
 
-st.write("Résultats du test de vitesse critique") 
+st.markdown("### Résultats du test de vitesse critique") 
 st.write("\n")  # Une lignes vides
 
 if st.session_state.fig is not None:
@@ -871,7 +871,7 @@ if st.session_state.CS is not None:
 # TELECHARGER LE RAPPORT PDF
 # =============================================================================
 
-st.write("Télécharger le rapport pdf") # Partie
+st.markdown("### Télécharger le rapport pdf") # Partie
 
 
 # Bouton télécharger
