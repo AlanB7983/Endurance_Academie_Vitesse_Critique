@@ -47,12 +47,17 @@ def calculate_critical_speed(distances, times):
     speeds = np.array(distances) / times  # Vitesse moyenne pour chaque test
     inverse_times = 1 / times  # Transformation en 1/t
 
-    # Régression linéaire : V = CS + D'/t
-    slope, intercept, _, _, _ = linregress(inverse_times, speeds)
+    # Régression linéaire : V = CS + D'/t s'il y a assez de valeur
+    if len(inverse_times) > 1 and times[0] != times[1]
+        slope, intercept, _, _, _ = linregress(inverse_times, speeds)
+    
+        CS = intercept  # Ordonnée à l'origine = vitesse critique
+        D_prime_0 = slope  # Pente = D'
 
-    CS = intercept  # Ordonnée à l'origine = vitesse critique
-    D_prime_0 = slope  # Pente = D'
-
+    # Sinon on met des valeurs random
+    else :
+        CS = 3
+        D_prime_0 = 100
     return CS, D_prime_0, speeds
 
 # Convertisseurs
