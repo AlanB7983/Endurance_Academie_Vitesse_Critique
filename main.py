@@ -891,7 +891,9 @@ st.markdown("### Télécharger le rapport pdf") # Partie
 
 
 # Bouton télécharger
-pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path)
+# On fait l'export
+if st.session_state.fig is not None:
+    pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path)
 
 
 # Champ pour le nom du fichier
