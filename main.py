@@ -142,7 +142,7 @@ def generate_training_zone_graph(pace_values):
     ))
     rpe_value = rpe_values[0]
     fig.add_annotation(
-        x=2, y=-0.25, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
+        x=2, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
     )
     
     fig.add_trace(go.Scatter(
@@ -152,7 +152,7 @@ def generate_training_zone_graph(pace_values):
     ))
     rpe_value = rpe_values[1]
     fig.add_annotation(
-        x=5.5, y=-0.25, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[1])
+        x=5.5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[1])
     )
     
     fig.add_trace(go.Scatter(
@@ -162,7 +162,7 @@ def generate_training_zone_graph(pace_values):
     ))
     rpe_value = rpe_values[2]
     fig.add_annotation(
-        x=7.25, y=-0.25, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[2])
+        x=7.25, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[2])
     )
     
     fig.add_trace(go.Scatter(
@@ -172,7 +172,7 @@ def generate_training_zone_graph(pace_values):
     ))
     rpe_value = rpe_values[3]
     fig.add_annotation(
-        x=8.25, y=-0.25, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[3])
+        x=8.25, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[3])
     )
     
     fig.add_trace(go.Scatter(
@@ -182,7 +182,7 @@ def generate_training_zone_graph(pace_values):
     ))
     rpe_value = rpe_values[4]
     fig.add_annotation(
-        x=9.5, y=-0.25, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[4])
+        x=9.5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[4])
     )
     
     
