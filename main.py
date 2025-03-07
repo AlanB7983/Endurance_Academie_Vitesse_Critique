@@ -395,7 +395,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
     
     # =============================================================================
-    #     PROFIL DE L'ATHLETE
+    #     VALEURS DES TESTS
     # =============================================================================
     
     subtitle_1 = Paragraph("Résultats des tests", subtitle2_style)
