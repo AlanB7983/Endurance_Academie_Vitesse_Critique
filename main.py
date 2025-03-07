@@ -896,29 +896,30 @@ if st.session_state.fig is not None:
     pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path)
 
 
-# Champ pour le nom du fichier
-file_name = st.text_input("Nom du fichier PDF :", placeholder="Bilan Profil Force-Vitesse.pdf")
-
-# Définir un état pour détecter le téléchargement
-if "pdf_downloaded" not in st.session_state:
-    st.session_state.pdf_downloaded = False
-
-# Bouton de téléchargement
-if st.download_button(
-    label="Télécharger le bilan PDF",
-    data=pdf_buffer,
-    file_name=file_name,
-    mime="application/pdf" # utilisé pour spécifier le type de fichier que l'utilisateur peut télécharger. Ici, application/pdf signifie qu'il s'agit d'un document pdf
-):
-    st.session_state.pdf_downloaded = True
-
-# Afficher le message seulement après le téléchargement
-if st.session_state.pdf_downloaded:
-    st.success("PDF exporté avec succès")
-else : # Il n'y a pas assez de lignes pour tracer un graphe
-    st.error("Le fichier PDF ne peut pas être exporté.")
- 
-
+    # Champ pour le nom du fichier
+    file_name = st.text_input("Nom du fichier PDF :", placeholder="Bilan Profil Force-Vitesse.pdf")
+    
+    # Définir un état pour détecter le téléchargement
+    if "pdf_downloaded" not in st.session_state:
+        st.session_state.pdf_downloaded = False
+    
+    # Bouton de téléchargement
+    if st.download_button(
+        label="Télécharger le bilan PDF",
+        data=pdf_buffer,
+        file_name=file_name,
+        mime="application/pdf" # utilisé pour spécifier le type de fichier que l'utilisateur peut télécharger. Ici, application/pdf signifie qu'il s'agit d'un document pdf
+    ):
+        st.session_state.pdf_downloaded = True
+    
+    # Afficher le message seulement après le téléchargement
+    if st.session_state.pdf_downloaded:
+        st.success("PDF exporté avec succès")
+    # else : # Il n'y a pas assez de lignes pour tracer un graphe
+    #     st.error("Le fichier PDF ne peut pas être exporté.")
+# Si le graphe n'existe pas 
+else :
+    st.warning("Réalisez le calcul de vitesse critique pour pouvoir exporter les résultats")
 
 
 
