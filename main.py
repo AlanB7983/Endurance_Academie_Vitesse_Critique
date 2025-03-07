@@ -140,8 +140,9 @@ def generate_training_zone_graph(pace_values):
         mode="lines", line=dict(color=rpe_colors[0], width=3),
         name="RPE 0-4", showlegend=False
     ))
+    rpe_value = rpe_values[0]
     fig.add_annotation(
-        x=2, y=-0.2, text=rpe_values[0], showarrow=False, font=dict(size=12, color=rpe_colors[0])
+        x=2, y=-0.2, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=12, color=rpe_colors[0])
     )
     
     fig.add_trace(go.Scatter(
@@ -149,8 +150,9 @@ def generate_training_zone_graph(pace_values):
         mode="lines", line=dict(color=rpe_colors[1], width=3),
         name="RPE 4-7", showlegend=False
     ))
+    rpe_value = rpe_values[1]
     fig.add_annotation(
-        x=5.5, y=-0.2, text=rpe_values[1], showarrow=False, font=dict(size=12, color=rpe_colors[1])
+        x=5.5, y=-0.2, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=12, color=rpe_colors[1])
     )
     
     fig.add_trace(go.Scatter(
@@ -158,8 +160,9 @@ def generate_training_zone_graph(pace_values):
         mode="lines", line=dict(color=rpe_colors[2], width=3),
         name="RPE 7-7.5", showlegend=False
     ))
+    rpe_value = rpe_values[2]
     fig.add_annotation(
-        x=7.25, y=-0.2, text=rpe_values[2], showarrow=False, font=dict(size=12, color=rpe_colors[2])
+        x=7.25, y=-0.2, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=12, color=rpe_colors[2])
     )
     
     fig.add_trace(go.Scatter(
@@ -167,8 +170,9 @@ def generate_training_zone_graph(pace_values):
         mode="lines", line=dict(color=rpe_colors[3], width=3),
         name="RPE 7.5-9", showlegend=False
     ))
+    rpe_value = rpe_values[3]
     fig.add_annotation(
-        x=8.25, y=-0.2, text=rpe_values[3], showarrow=False, font=dict(size=12, color=rpe_colors[3])
+        x=8.25, y=-0.2, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=12, color=rpe_colors[3])
     )
     
     fig.add_trace(go.Scatter(
@@ -176,8 +180,9 @@ def generate_training_zone_graph(pace_values):
         mode="lines", line=dict(color=rpe_colors[4], width=3),
         name="RPE 9-10", showlegend=False
     ))
+    rpe_value = rpe_values[4]
     fig.add_annotation(
-        x=9.5, y=-0.2, text=rpe_values[4], showarrow=False, font=dict(size=12, color=rpe_colors[4])
+        x=9.5, y=-0.2, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=12, color=rpe_colors[4])
     )
     
     
@@ -492,8 +497,8 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     
     # Ajustement de la largeur et de la hauteur du graphe 
     Domaines_graph = Image(Domaines_graph_path)
-    Domaines_graph.drawHeight = graph_width * Domaines_graph.drawHeight / Domaines_graph.drawWidth
-    Domaines_graph.drawWidth = graph_width
+    Domaines_graph.drawHeight = page_width * Domaines_graph.drawHeight / Domaines_graph.drawWidth
+    Domaines_graph.drawWidth = page_width
 
     elements.append(Domaines_graph)
 
