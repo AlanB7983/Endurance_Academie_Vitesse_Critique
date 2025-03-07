@@ -408,7 +408,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
     elements.append(Spacer(1, 6))  # Ajouter un espace après le texte
 
-    # TABLEAU DES DONNEES DE L'ATHLETE
+    # TABLEAU DES VALEURS DE TEST
 
     # nouveaux_noms_athlete_profile = [
     #     Paragraph('Distance [m]', normal_style),
