@@ -122,12 +122,12 @@ def generate_training_zone_graph(pace_values):
         indice = L_i[i]
         fig.add_trace(go.Scatter(
             x=[indice, indice], y=[-0.08, 1.08],
-            mode="lines", line=dict(color="black", dash="dot", width=0.5),
+            mode="lines", line=dict(color="#453E3B", dash="dot", width=0.5),
             name=label
         ))
         fig.add_annotation(
             x=indice, y=1.25, text=f"{label}<br>{pace}", showarrow=False,
-            font=dict(size=10, color="black")
+            font=dict(size=10, color="#453E3B")
         )
 
 
