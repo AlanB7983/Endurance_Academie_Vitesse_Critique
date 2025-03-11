@@ -634,7 +634,7 @@ with selec_num_point_col1 :
 
 with selec_num_point_col2 :
     # Bouton pour afficher/masquer l'aide
-    if st.button("?"):
+    if st.toggle("?"):
         st.session_state.show_help = not st.session_state.show_help
     
     # Affichage du texte explicatif si le bouton est activé
