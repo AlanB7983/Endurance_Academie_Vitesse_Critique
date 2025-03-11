@@ -642,8 +642,10 @@ if st.session_state.show_help:
     st.info("Pour davantage de précision sur la détermination de la vitesse critique, saisir des valeurs correspondant à des durées comprises entre 3 et 30 minutes.")
 
 
+# saut de ligne
+st.write("\n")
 
-
+st.markdown("**Valeurs des tests : **") 
 # Entrée utilisateur
 distances = []
 times = []
