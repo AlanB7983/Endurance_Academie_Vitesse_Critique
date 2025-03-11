@@ -625,11 +625,11 @@ if "show_help" not in st.session_state:
     st.session_state.show_help = False
 
 # Création de colonnes pour aligner les éléments
-selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([4, 1, 12])  # Ajuster la largeur pour un bon alignement
+selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([5, 1, 12])  # Ajuster la largeur pour un bon alignement
 
 with selec_num_point_col1 :
     # Sélection du nombre de tests
-    st.markdown("#### Nombre de tests à entrer :") 
+    st.markdown("**Nombre de tests à entrer :**") 
     num_points = st.radio("", [2, 3], horizontal = True, index = 0)
 
 with selec_num_point_col2 :
