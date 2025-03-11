@@ -629,7 +629,8 @@ selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([4, 1, 12]) 
 
 with selec_num_point_col1 :
     # Sélection du nombre de tests
-    num_points = st.radio("Nombre de tests à entrer :", [2, 3], horizontal = True)
+    st.markdown("#### Nombre de tests à entrer :") 
+    num_points = st.radio("", [2, 3], horizontal = True, index = 0)
 
 with selec_num_point_col2 :
     # Bouton pour afficher/masquer l'aide
