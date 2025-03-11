@@ -624,18 +624,24 @@ st.markdown("### Saisie des données de test")
 if "show_help" not in st.session_state:
     st.session_state.show_help = False
 
-# Bouton pour afficher/masquer l'aide
-if st.button("❓"):
-    st.session_state.show_help = not st.session_state.show_help
+# Création de colonnes pour aligner les éléments
+selec_num_point_col1, selec_num_point_col2 = st.columns([4, 1])  # Ajuster la largeur pour un bon alignement
 
-# Affichage du texte explicatif si le bouton est activé
-if st.session_state.show_help:
-    st.info("La vitesse critique est un modèle mathématique estimant la frontière entre les domaines d’intensité élevée et sévère !")
+with selec_num_point_col1 :
+    # Sélection du nombre de tests
+    num_points = st.radio("Nombre de tests à entrer :", [2, 3], horizontal = True)
+
+with selec_num_point_col2 :
+    # Bouton pour afficher/masquer l'aide
+    if st.button("❓"):
+        st.session_state.show_help = not st.session_state.show_help
+    
+    # Affichage du texte explicatif si le bouton est activé
+    if st.session_state.show_help:
+        st.info("Pour davantage de précision sur la détermination de la vitesse critique, saisir ")
 
 
 
-# Sélection du nombre de tests
-num_points = st.radio("Nombre de tests à entrer :", [2, 3], horizontal = True)
 
 # Entrée utilisateur
 distances = []
