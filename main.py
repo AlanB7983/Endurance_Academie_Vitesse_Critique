@@ -646,7 +646,7 @@ st.write("\n")
 
 
 # Entrée utilisateur
-st.markdown("**Valeurs des tests : **") 
+st.markdown("### Valeurs des tests : ") 
 
 distances = []
 times = []
