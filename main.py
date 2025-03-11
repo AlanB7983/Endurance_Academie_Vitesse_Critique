@@ -574,16 +574,23 @@ st.write("\n")
 st.write("\n")
 
 with st.expander("Définition et hypothèses") :
+    st.subheader("Généralités")
     st.write(r"""
 La vitesse critique (VC) est un modèle mathématique utilisé pour estimer la frontière entre deux domaines d'intensité d'exercice : l’intensité élevée (où l'homéostasie est maintenue) et l’intensité sévère (où l'homéostasie est rompue et l'épuisement est inévitable). Ce modèle repose sur une relation hyperbolique entre la vitesse et la durée de l’effort, définissant une vitesse seuil soutenable sur une longue période.
 """)
     st.image("Pictures/Modele Vitesse Critique.PNG", use_container_width=True)
     st.write(r"""
+Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité anaérobie ($D'$)** à partir de tests de course.
+""")
+
+    st.latex(r"V(t) = CS + \frac{D'}{t}")
+    st.subheader("Définition et utilisation de D'")
+    st.write(r"""
 Le paramètre $D'$ représente une quantité de travail pouvant être effectuée au-delà de la vitesse critique avant d'atteindre l'épuisement. Plutôt que d’être une simple "réserve anaérobie", $D'$ est mieux décrit comme une capacité de travail finie issue de processus métaboliques non soutenables sur le long terme. Il inclut l’utilisation des phosphagènes (ATP-PCr), de la glycolyse anaérobie et potentiellement de contributions aérobie transitoires.
 
 Lorsque la vitesse excède la vitesse critique, $D'$ est consommé proportionnellement à l’intensité de l’effort. Plus l’athlète court vite, plus $D'$ se vide rapidement. À l’inverse, lorsqu’il ralentit sous la vitesse critique, $D'$ se reconstitue progressivement selon une dynamique exponentielle, dont la vitesse dépend d’une constante de temps $\tau$.
 
-L'utilisation de $D'$ permet de calibrer les séances d'entraînement en haute intensité (HIT) en quantifiant précisément la tolérance à l'effort au-dessus de la vitesse critique. Cela aide à structurer les répétitions et les périodes de récupération. Cependant, il s'agit d'un modèle, et la cinétique de récupération de $D'$ varie d'un individu à l'autre, notamment en fonction de l'entraînement et des caractéristiques physiologiques. Avec l'accumulation des séances, $D$ peut être ajusté progressivement, permettant ainsi d'affiner la programmation et d'offrir une ligne directrice fiable pour optimiser la performance.
+L'utilisation de $D'$ permet de calibrer les séances d'entraînement en haute intensité (HIT) en quantifiant précisément la tolérance à l'effort au-dessus de la vitesse critique. Cela aide à structurer les répétitions et les périodes de récupération. Cependant, il s'agit d'un modèle, et la cinétique de récupération de $D'$ varie d'un individu à l'autre, notamment en fonction de l'entraînement et des caractéristiques physiologiques. Avec l'accumulation des séances, $D'$ peut être ajusté progressivement, permettant ainsi d'affiner la programmation et d'offrir une ligne directrice fiable pour optimiser la performance.
 """)
     st.subheader("Pertinence de la Vitesse Critique pour Déterminer le MMSS")
     st.write(r"""
@@ -591,11 +598,7 @@ L’article de Jones et al. (2019)​ met en lumière l'importance de la vitesse
 """)
     st.write("- L’intensité élevée, où la consommation d’oxygène et les niveaux de lactate atteignent un état stable.")
     st.write("- L’intensité sévère, où la demande énergétique excède les capacités oxydatives, entraînant une dérive progressive du métabolisme et l’épuisement.")
-    st.write(r"""
-Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité anaérobie ($D'$)** à partir de tests de course.
-""")
-
-    st.latex(r"V(t) = CS + \frac{D'}{t}")
+    
 
 
 
