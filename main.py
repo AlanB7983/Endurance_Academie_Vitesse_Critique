@@ -634,12 +634,12 @@ with selec_num_point_col1 :
 
 with selec_num_point_col2 :
     # Bouton pour afficher/masquer l'aide
-    if st.toggle("?"):
+    if st.button("?"):
         st.session_state.show_help = not st.session_state.show_help
     
-    # Affichage du texte explicatif si le bouton est activé
-    if st.session_state.show_help:
-        st.info("Pour davantage de précision sur la détermination de la vitesse critique, saisir des valeurs correspondant à des durées comprises entre 3 et 30 minutes.")
+# Affichage du texte explicatif si le bouton est activé
+if st.session_state.show_help:
+    st.info("Pour davantage de précision sur la détermination de la vitesse critique, saisir des valeurs correspondant à des durées comprises entre 3 et 30 minutes.")
 
 
 
