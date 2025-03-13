@@ -639,7 +639,7 @@ with selec_num_point_col2 :
     
 # Affichage du texte explicatif si le bouton est activé
 if st.session_state.show_help:
-    st.info("Pour davantage de précision sur la détermination de la vitesse critique, saisir des valeurs correspondant à des durées comprises entre 3 et 30 minutes.")
+    st.info("Pour davantage de précision sur la détermination de la vitesse critique, la littérature conseille de saisir des durées comprises entre 2 et 20 minutes.")
 
 # saut de ligne
 st.write("\n")
@@ -716,7 +716,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Génération des données pour la courbe
         time_range = np.linspace(20, 2500, 200)  # Étendre jusqu'à 2500 s
-        speed_pred = CS + (D_prime_0 / time_range)  # Courbe hyperbolique
+        speed_pred = (CS + (D_prime_0 / time_range))*3.6  # Courbe hyperbolique
 
         # Création du graphique avec Plotly
         fig = go.Figure()
@@ -750,7 +750,7 @@ if st.button("Calculer la Vitesse Critique"):
         # Ajout de la zone représentant D' sous forme de rectangle
         fig.add_trace(go.Scatter(
             x=[0, 300, 300, 0, 0],
-            y=[CS, CS, CS_5min, CS_5min, CS],
+            y=[CS*3.6, CS*3.6, CS_5min*3.6, CS_5min*3.6, CS*3.6],
             fill='toself', fillcolor='rgba(170, 61, 0, 0.2)',# 'rgba(69, 62, 59, 0.3)',
             line=dict(color='rgba(0,0,0,0)'), # dict(color='#A8C686', width=1),
             name=f"Réserve anaérobie (D') = {round(D_prime_0, 2)} m"
@@ -759,7 +759,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Points expérimentaux
         fig.add_trace(go.Scatter(
-            x=times, y=np.array(distances) / np.array(times),
+            x=times, y=speed_pred, # np.array(distances) / np.array(times),
             mode='markers', marker=dict(color='#AA3D00', size=8),
             name="Données expérimentales"
         ))
@@ -774,7 +774,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Asymptote horizontale (CS)
         fig.add_trace(go.Scatter(
-            x=[0, 2500], y=[CS, CS],
+            x=[0, 2500], y=[CS*3.6, CS*3.6],
             mode='lines', line=dict(color='#A8C686', width=2, dash='dash'),
             name=f"Vitesse Critique (CS) = {CS_pace}"
         ))
@@ -806,7 +806,7 @@ if st.button("Calculer la Vitesse Critique"):
             showline=True,  # Afficher la barre de l'axe Y
             linecolor='black',  # Couleur de la barre de l'axe Y
             linewidth=0.5,  # Largeur de la barre de l'axe Y
-            range=[0.5*CS, max(speed_pred)*0.8], 
+            range=[0.5*CS*3.6, max(speed_pred)*0.8], 
             showgrid=False,
             tickformat='.1f',
             tickfont=dict(color='black')
