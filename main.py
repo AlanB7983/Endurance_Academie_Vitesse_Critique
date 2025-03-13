@@ -580,7 +580,7 @@ La vitesse critique (VC) est un modèle mathématique utilisé pour estimer la f
 """)
     st.image("Pictures/Modele Vitesse Critique.PNG", use_container_width=True)
     st.write(r"""
-Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité anaérobie ($D'$)** à partir de tests de course.
+Ce programme permet de calculer la **vitesse critique (CS)** et la **capacité anaérobie ($D'$)** à partir de tests de course, et de **programmer une séance HIT (> CS)** en déterminant l'évolution de $D'$ pour une séance donnée. La relation qui lie la vitesse au temps sur laquelle est basée le modèle de vitesse critique est rappelée ci-dessous.
 """)
 
     st.latex(r"V(t) = CS + \frac{D'}{t}")
