@@ -802,7 +802,7 @@ if st.button("Calculer la Vitesse Critique"):
             tickfont=dict(color='black')
             ),
         yaxis=dict(
-            title = dict(text = "Vitesse (m/s)", font = dict(color = 'black')),
+            title = dict(text = "Vitesse (km/h)", font = dict(color = 'black')),
             showline=True,  # Afficher la barre de l'axe Y
             linecolor='black',  # Couleur de la barre de l'axe Y
             linewidth=0.5,  # Largeur de la barre de l'axe Y
