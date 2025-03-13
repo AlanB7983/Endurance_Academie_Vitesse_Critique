@@ -759,7 +759,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Points expérimentaux
         fig.add_trace(go.Scatter(
-            x=times, y=speed_pred, # np.array(distances) / np.array(times),
+            x=times, y=(np.array(distances) / np.array(times))*3.6,
             mode='markers', marker=dict(color='#AA3D00', size=8),
             name="Données expérimentales"
         ))
