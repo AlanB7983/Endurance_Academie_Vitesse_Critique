@@ -693,7 +693,7 @@ CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
 CS_5min = CS + (D_prime_0 / 300)
 
 # Calcul de l'indice de durabilité
-Durability = round((CS/CS_5min)*100,1)
+Durability = round((1-np.log(speeds[0]/speeds[1])/np.log(times[1]/times[0]))*100,1)
 
 # Transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
 L_speeds = speeds.tolist()
