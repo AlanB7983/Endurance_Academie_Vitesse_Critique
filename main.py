@@ -627,7 +627,25 @@ L’article de Jones et al. (2019)​ met en lumière l'importance de la vitesse
 """)
     st.write("- L’intensité élevée, où la consommation d’oxygène et les niveaux de lactate atteignent un état stable.")
     st.write("- L’intensité sévère, où la demande énergétique excède les capacités oxydatives, entraînant une dérive progressive du métabolisme et l’épuisement.")
-    
+with st.expander("Références") :
+    st.markdown("""
+    **[1] Hunter, B., Meyler, S., Maunder, E., Cox, T. H., & Muniz-Pumares, D. (2024).**  
+    The Relationship Between the Moderate–Heavy Boundary and Critical Speed in Running.  
+    *International Journal of Sports Physiology and Performance, 19*(9), 963-972.  
+    [DOI: 10.1123/ijspp.2024-0101](https://doi.org/10.1123/ijspp.2024-0101)
+    """)
+    st.markdown("""
+    **[2] Hunter, B., Meyler, S., Maunder, E., Cox, T. H., & Muniz-Pumares, D. (2024).**  
+    The Relationship Between the Moderate–Heavy Boundary and Critical Speed in Running.  
+    *International Journal of Sports Physiology and Performance, 19*(9), 963-972.  
+    [DOI: 10.1123/ijspp.2024-0101](https://doi.org/10.1123/ijspp.2024-0101)
+    """)
+    st.markdown("""
+    **[3] Hunter, B., Meyler, S., Maunder, E., Cox, T. H., & Muniz-Pumares, D. (2024).**  
+    The Relationship Between the Moderate–Heavy Boundary and Critical Speed in Running.  
+    *International Journal of Sports Physiology and Performance, 19*(9), 963-972.  
+    [DOI: 10.1123/ijspp.2024-0101](https://doi.org/10.1123/ijspp.2024-0101)
+    """)
 
 
 
