@@ -547,7 +547,7 @@ def estimate_LT1(cs, d_index):
     lt1 = cs * base_factor * adjustment
     lt1 = round(lt1, 2)
     lt1ratio = round((lt1/cs)*100, 1)
-    return lt1  # Arrondi à 2 décimales
+    return lt1, lt1ratio  # Arrondi à 2 décimales
 
 
 
@@ -919,8 +919,9 @@ if st.session_state.CS is not None:
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
     LT2_pace_without_unit = LT2_pace[:4]
-    LT1_speed = estimate_LT1(CS, Durability/100.0)
+    LT1_speed, LT1_percent = estimate_LT1(CS, Durability/100.0)
     # LT1_speed = 0.8*CS
+    st.write("LT1 représente " + str(LT1_percent) + " de la vitesse critique)
     LT1_pace = speed_to_pace(LT1_speed)
     LT1_pace_without_unit = LT1_pace[:4]
     CS_pace_without_unit = CS_pace[:4]
