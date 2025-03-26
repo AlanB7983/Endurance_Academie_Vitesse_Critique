@@ -518,7 +518,36 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     return buffer
 
 
-
+def estimate_LT1(cs, d_index):
+    """
+    Estime le premier seuil (LT1) à partir de la vitesse critique (CS) et de l’indice de durabilité (D’index).
+    
+    Paramètres :
+    - cs : float - Vitesse critique (km/h)
+    - d_index : float - Indice de durabilité (0 à 1)
+    
+    Retourne :
+    - lt1 : float - Estimation de la vitesse au premier seuil (km/h)
+    - lt1ratio : float - Ratio de LT1 par rapport à CS
+    """
+    # Facteurs de base selon la plage de CS (issus de l'étude)
+    if cs <= 12:
+        base_factor = 0.806
+    elif 12 < cs <= 14:
+        base_factor = 0.832
+    else:
+        base_factor = 0.842
+    
+    # Ajustement basé sur l'indice de durabilité (k = 0.05, ajustable empiriquement)
+    k = 0.05  
+    d_ref = 0.8  # Valeur moyenne de D’index
+    adjustment = 1 + k * (d_index - d_ref)
+    
+    # Calcul de LT1 ajusté
+    lt1 = cs * base_factor * adjustment
+    lt1 = round(lt1, 2)
+    lt1ratio = round((lt1/cs)*100, 1)
+    return lt1  # Arrondi à 2 décimales
 
 
 
@@ -692,7 +721,7 @@ CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
 # Calcul du point CS_5min
 CS_5min = CS + (D_prime_0 / 300)
 
-# Calcul de l'indice de durabilité
+# Calcul de l'indice de durabilité (en %)
 Durability = round((1-np.log(speeds[0]/speeds[-1])/np.log(times[-1]/times[0]))*100,1)
 
 # Transformer les valeurs de test en tableau dataframe pour pouvoir l'afficher dans le rapport ensuite
@@ -872,7 +901,8 @@ if st.session_state.CS is not None:
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
     LT2_pace_without_unit = LT2_pace[:4]
-    LT1_speed = 0.8*CS
+    LT1_speed = estimate_LT1(CS, Durability/100.0)
+    # LT1_speed = 0.8*CS
     LT1_pace = speed_to_pace(LT1_speed)
     LT1_pace_without_unit = LT1_pace[:4]
     CS_pace_without_unit = CS_pace[:4]
