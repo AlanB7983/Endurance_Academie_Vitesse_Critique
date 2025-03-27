@@ -642,10 +642,10 @@ with st.expander("Références") :
     [DOI: 10.1123/ijspp.2024-0101](https://doi.org/10.1123/ijspp.2024-0101)
     """)
     st.markdown("""
-    **[3] Hunter, B., Meyler, S., Maunder, E., Cox, T. H., & Muniz-Pumares, D. (2024).**  
-    The Relationship Between the Moderate–Heavy Boundary and Critical Speed in Running.  
-    *International Journal of Sports Physiology and Performance, 19*(9), 963-972.  
-    [DOI: 10.1123/ijspp.2024-0101](https://doi.org/10.1123/ijspp.2024-0101)
+    **[3] Jones, A. M., et al. (2019).**  
+    The Maximal Metabolic Steady State: Redefining the Gold Standard.  
+    *Physiological Reports, 7*(10), e14098.
+    [DOI: 10.14814/phy2.14098](https://physoc.onlinelibrary.wiley.com/doi/10.14814/phy2.14098)​.
     """)
 
 
