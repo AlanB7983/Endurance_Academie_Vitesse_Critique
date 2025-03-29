@@ -539,7 +539,7 @@ def estimate_LT1(cs, d_index):
         base_factor = 0.842
     
     # Ajustement basé sur l'indice de durabilité (k = 0.05, ajustable empiriquement)
-    k = 0.1  
+    k = 0.2  
     d_ref = 0.8  # Valeur moyenne de D’index
     adjustment = 1 + k * (d_index - d_ref)
     
