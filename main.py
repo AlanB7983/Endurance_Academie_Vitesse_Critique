@@ -669,25 +669,25 @@ st.markdown("### Saisie des données de test")
 
          
 # Crée un état pour stocker l'affichage de l'aide
-if "show_help" not in st.session_state:
-    st.session_state.show_help = False
+#if "show_help" not in st.session_state:
+    #st.session_state.show_help = False
 
 # Création de colonnes pour aligner les éléments
-selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([5, 1, 12])  # Ajuster la largeur pour un bon alignement
+#selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([5, 1, 12])  # Ajuster la largeur pour un bon alignement
 
-with selec_num_point_col1 :
+#with selec_num_point_col1 :
     # Sélection du nombre de tests
-    st.markdown("**Nombre de tests à entrer :**") 
-    num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
+st.markdown("**Nombre de tests à entrer :**") 
+num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
 
-with selec_num_point_col2 :
+#with selec_num_point_col2 :
     # Bouton pour afficher/masquer l'aide
-    if st.button("?"):
-        st.session_state.show_help = not st.session_state.show_help
+    #if st.button("?"):
+        #st.session_state.show_help = not st.session_state.show_help
     
 # Affichage du texte explicatif si le bouton est activé
-if st.session_state.show_help:
-    st.info("Pour davantage de précision sur la détermination de la vitesse critique, la littérature conseille de saisir des durées comprises entre 2 et 20 minutes.")
+#if st.session_state.show_help:
+st.info("Pour davantage de précision sur la détermination de la vitesse critique, la littérature conseille de saisir des durées comprises entre 2 et 20 minutes (voir [1]).")
 
 # saut de ligne
 st.write("\n")
