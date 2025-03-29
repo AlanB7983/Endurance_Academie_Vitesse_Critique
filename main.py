@@ -694,7 +694,8 @@ st.write("\n")
 
 
 # Entrée utilisateur
-st.markdown("### Valeurs des tests : ") 
+st.markdown("**Valeurs des tests :**") 
+# st.markdown("### Valeurs des tests : ") 
 
 distances = []
 times = []
@@ -920,7 +921,7 @@ if st.session_state.CS is not None:
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
     LT2_pace_without_unit = LT2_pace[:4]
-    LT1_speed, LT1_percent, base_factor, adjustment = estimate_LT1(CS, Durability/100.0)
+    LT1_speed, LT1_percent, base_factor, adjustment = estimate_LT1(CS*3.6, Durability/100.0)
     # LT1_speed = 0.8*CS
     st.write("LT1 représente " + str(LT1_percent) + " de la vitesse critique")
     st.write("base_factor = " + str(base_factor))
