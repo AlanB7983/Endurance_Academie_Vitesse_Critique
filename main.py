@@ -926,7 +926,7 @@ if st.session_state.CS is not None:
     st.write("LT1 représente " + str(LT1_percent) + " de la vitesse critique")
     st.write("base_factor = " + str(base_factor))
     st.write("adjustment = " + str(adjustment))
-    LT1_pace = speed_to_pace(LT1_speed)
+    LT1_pace = speed_to_pace(LT1_speed/3.6)
     LT1_pace_without_unit = LT1_pace[:4]
     CS_pace_without_unit = CS_pace[:4]
     pace_values = {
