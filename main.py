@@ -1017,8 +1017,8 @@ choice = st.radio("Ajouter :", ["Bloc simple", "Répétition"], horizontal = Tru
 
 with st.form("Ajouter un bloc ou une répétition"):
     if choice == "Bloc simple":
-        st.markdown("<p style='font-size:14px;'>**Durée du bloc**</p>", unsafe_allow_html=True)
-        st.markdown("**Durée du bloc**")
+        st.markdown("<p style='font-size:14px;'><strong>Durée du bloc</strong></p>", unsafe_allow_html=True)
+        #st.markdown("**Durée du bloc**")
         duration_bloc_simple_col1, duration_bloc_simple_col2 = st.columns(2)
         with duration_bloc_simple_col1 :
             duration_min = st.number_input("minutes :", min_value=0, step=1, value=5) * 60
