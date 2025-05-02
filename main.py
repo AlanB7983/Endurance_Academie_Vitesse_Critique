@@ -1013,7 +1013,8 @@ if "session" not in st.session_state:
     st.session_state.session = []
 
 # Choix entre ajout d'un bloc ou d'une répétition
-choice = st.radio("Ajouter :", ["Bloc simple", "Répétition"], horizontal = True)
+st.markdown("**Sélectionner le type de bloc à ajouter**")
+choice = st.radio("", ["Bloc simple", "Répétition"], horizontal = True, label_visibility="collapsed")
 
 with st.form("Ajouter un bloc ou une répétition"):
     if choice == "Bloc simple":
@@ -1059,7 +1060,6 @@ with st.form("Ajouter un bloc ou une répétition"):
         duration2 = duration2_min + duration2_sec
         st.write("\n")
         percent_CS2 = st.slider("**Intensité du 2ème bloc (% de CS) :**", min_value=50, max_value=150, step=5, value=75)
-
         
         submitted = st.form_submit_button("Ajouter cette répétition")
 
