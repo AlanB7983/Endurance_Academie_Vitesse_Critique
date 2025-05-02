@@ -230,7 +230,7 @@ def compute_D_prime_evolution(CS, D_prime_0, session, dt=1) :
     velocities = np.zeros_like(time, dtype=float) # Liste numpy calquée sur "time" remplie de 0
 
     t_index = 0
-    tau = 600 # Constante de temps #300, 450, 600
+    tau = 300 # Constante de temps #300, 450, 600
     
     for i, (duration, percent_CS) in enumerate(session):
         V = CS * (percent_CS / 100)  
