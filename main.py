@@ -1065,7 +1065,7 @@ with st.form("Ajouter un bloc ou une répétition"):
             if len(duration2_min) == 0 :
                 duration2_min = 0
             else :
-                duration2_min = int(duration2_min)
+                duration2_min = int(duration2_min) * 60
         with duration_bloc_2_col2 :
             #duration2_sec = st.number_input("secondes :", min_value=0, step=1, value=0)
             duration2_sec = st.text_input("secondes :", placeholder="0")
