@@ -1024,8 +1024,8 @@ with st.form("Ajouter un bloc ou une répétition"):
         with duration_bloc_simple_col2 :
             duration_sec = st.number_input("secondes :", min_value=0, step=1, value=0)
         duration = duration_min + duration_sec
-        st.write()
-        st.markdown("**Intensité en % de CS**")
+        st.write("\n")
+        # st.markdown("**Intensité en % de CS**")
         percent_CS = st.slider("**Intensité en % de CS**", min_value=50, max_value=150, step=5, value=100)
         submitted = st.form_submit_button("Ajouter ce bloc")
 
