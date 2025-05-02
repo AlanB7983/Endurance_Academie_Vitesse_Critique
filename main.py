@@ -1048,7 +1048,7 @@ with st.form("Ajouter un bloc ou une répétition"):
             duration1_sec = st.number_input("secondes :", min_value=0, step=1, value=0)
         
         duration1 = duration1_min + duration1_sec
-        st.write("duration1 :", duration1)
+        #st.write("duration1 :", duration1)
         st.write("\n")
         percent_CS1 = st.slider("**Intensité du 1er bloc (% de CS) :**", min_value=50, max_value=150, step=5, value=100)
         
@@ -1078,7 +1078,7 @@ with st.form("Ajouter un bloc ou une répétition"):
                 
 
         duration2 = duration2_min + duration2_sec
-        st.write("duration2 :", duration2)
+        #st.write("duration2 :", duration2)
         #duration2 = st.number_input("minutes :", min_value=1, step=1, value=2) * 60
         st.write("\n")
         percent_CS2 = st.slider("**Intensité du 2ème bloc (% de CS) :**", min_value=50, max_value=150, step=5, value=75)
