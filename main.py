@@ -1063,7 +1063,7 @@ with st.form("Ajouter un bloc ou une répétition"):
         if duration2_min == 60 and duration2_sec == 0 :
             duration2 = int(100)
         else :
-        duration2 = duration2_min + duration2_sec
+            duration2 = duration2_min + duration2_sec
         st.write("duration2 :", duration2)
         #duration2 = st.number_input("minutes :", min_value=1, step=1, value=2) * 60
         st.write("\n")
