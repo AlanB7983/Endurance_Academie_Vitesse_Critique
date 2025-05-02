@@ -230,7 +230,7 @@ def compute_D_prime_evolution(CS, D_prime_0, session, dt=1) :
     velocities = np.zeros_like(time, dtype=float) # Liste numpy calquée sur "time" remplie de 0
 
     t_index = 0
-    tau = 600 # Constante de temps #300, 450, 600
+    tau = 300 # Constante de temps #300, 450, 600
     
     for i, (duration, percent_CS) in enumerate(session):
         V = CS * (percent_CS / 100)  
@@ -1103,9 +1103,9 @@ if st.session_state.session:
         speed_kmh = speed_m_s_to_kmh(speed_m_s)
         pace = speed_to_pace(speed_m_s)
         if percent_CS > 100 :
-            L_saisie_seance.append(f"🔴 {dur//60} min à {percent_CS}% de CS → {speed_kmh:.2f} km/h ({pace} min/km)")
+            L_saisie_seance.append(f"🔴 {dur//60} min à {percent_CS}% de CS → {speed_kmh:.2f} km/h ({pace})") # min/km
         else :
-            L_saisie_seance.append(f"🟢 {dur//60} min à {percent_CS}% de CS → {speed_kmh:.2f} km/h ({pace} min/km)")
+            L_saisie_seance.append(f"🟢 {dur//60} min à {percent_CS}% de CS → {speed_kmh:.2f} km/h ({pace})")
     
     afficher_blocs(L_saisie_seance)
     # for i in range(len(L_saisie_seance)) :
