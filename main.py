@@ -1017,8 +1017,8 @@ choice = st.radio("Ajouter :", ["Bloc simple", "Répétition"], horizontal = Tru
 
 with st.form("Ajouter un bloc ou une répétition"):
     if choice == "Bloc simple":
-        duration_bloc_simple_col1, duration_bloc_simple_col2 = st.columns(2)
         st.markdown("**Durée du bloc**")
+        duration_bloc_simple_col1, duration_bloc_simple_col2 = st.columns(2)
         with duration_bloc_simple_col1 :
             duration_min = st.number_input("minutes :", min_value=0, step=1, value=5) * 60
         with duration_bloc_simple_col2 :
@@ -1026,7 +1026,7 @@ with st.form("Ajouter un bloc ou une répétition"):
         duration = duration_min + duration_sec
         st.write()
         st.markdown("**Intensité en % de CS**")
-        percent_CS = st.slider("", min_value=50, max_value=150, step=5, value=100)
+        percent_CS = st.slider("**Intensité en % de CS**", min_value=50, max_value=150, step=5, value=100)
         submitted = st.form_submit_button("Ajouter ce bloc")
 
         if submitted:
