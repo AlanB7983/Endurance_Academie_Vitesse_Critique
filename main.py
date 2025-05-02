@@ -1019,9 +1019,9 @@ with st.form("Ajouter un bloc ou une répétition"):
     if choice == "Bloc simple":
         duration_bloc_simple_col1, duration_bloc_simple_col2 = st.columns(2)
         with duration_bloc_simple_col1 :
-            duration_min = st.number_input("Durée du bloc (min) :", min_value=1, step=1, value=5) * 60
+            duration_min = st.number_input("Durée du bloc (min) :", min_value=0, step=1, value=5) * 60
         with duration_bloc_simple_col2 :
-            duration_sec = st.number_input("Durée du bloc (sec) :", min_value=1, step=1, value=5)
+            duration_sec = st.number_input("Durée du bloc (sec) :", min_value=0, step=1, value=0)
         duration = duration_min + duration_sec
         percent_CS = st.slider("Intensité en % de CS :", min_value=50, max_value=150, step=5, value=100)
         submitted = st.form_submit_button("Ajouter ce bloc")
@@ -1036,12 +1036,22 @@ with st.form("Ajouter un bloc ou une répétition"):
         
         st.write("")
         st.subheader("Bloc 1")
-        duration1 = st.number_input("Durée du 1er bloc (min) :", min_value=1, step=1, value=2) * 60
+        duration_bloc_1_col1, duration_bloc_1_col2 = st.columns(2)
+        with duration_bloc_1_col1 :
+            duration1_min = st.number_input("Durée du 1er bloc (min) :", min_value=0, step=1, value=1) * 60
+        with duration_bloc_1_col2 :
+            duration1_sec = st.number_input("Durée du 1er bloc (sec) :", min_value=0, step=1, value=0)
+        duration1 = duration1_min + duration1_sec
         percent_CS1 = st.slider("Intensité du 1er bloc (% de CS) :", min_value=50, max_value=150, step=5, value=100)
         
         st.write("")
         st.subheader("Bloc 2")
-        duration2 = st.number_input("Durée du 2ème bloc (min) :", min_value=1, step=1, value=1) * 60
+        duration_bloc_2_col1, duration_bloc_2_col2 = st.columns(2)
+        with duration_bloc_2_col1 :
+            duration2_min = st.number_input("Durée du 2ème bloc (min) :", min_value=0, step=1, value=1) * 60
+        with duration_bloc_2_col2 :
+            duration2_sec = st.number_input("Durée du 2ème bloc (sec) :", min_value=0, step=1, value=0)
+        duration2 = duration2_min + duration2_sec
         percent_CS2 = st.slider("Intensité du 2ème bloc (% de CS) :", min_value=50, max_value=150, step=5, value=75)
 
         
