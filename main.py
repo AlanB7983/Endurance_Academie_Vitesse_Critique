@@ -1035,7 +1035,7 @@ with st.form("Ajouter un bloc ou une répétition"):
             st.rerun()
 
     elif choice == "Répétition":
-        repetitions = st.number_input("Nombre de répétitions :", min_value=1, step=1, value=3)
+        repetitions = st.number_input("**Nombre de répétitions :**", min_value=1, step=1, value=3)
         
         st.write("")
         st.subheader("Bloc 1")
@@ -1060,7 +1060,6 @@ with st.form("Ajouter un bloc ou une répétition"):
         duration2 = duration2_min + duration2_sec
         st.write("\n")
         percent_CS2 = st.slider("**Intensité du 2ème bloc (% de CS) :**", min_value=50, max_value=150, step=5, value=75)
-        
         submitted = st.form_submit_button("Ajouter cette répétition")
 
         if submitted:
