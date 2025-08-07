@@ -696,31 +696,64 @@ st.write("\n")
 # Entrée utilisateur
 st.markdown("**Valeurs des tests :**") 
 # st.markdown("### Valeurs des tests : ") 
+# On coche si on veut renseigner les puissances également
+use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
 
 distances = []
 times = []
+powers = []
 
 for i in range(num_points):
-    col1, col2 = st.columns(2)
-    with col1:
-        d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
-        
-        # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
-        if len(d) == 0 :
-            d = 1000
-        else :
-            d = float(d)
+    if use_power_data == False :
+        col1, col2 = st.columns(2)
+        with col1:
+            d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
             
-    with col2:
-        t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
-
-        if len(t) == 0 :
-            t = 180
-        else :
-            t = float(t)
+            # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+            if len(d) == 0 :
+                d = 1000
+            else :
+                d = float(d)
+                
+        with col2:
+            t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
     
-    distances.append(d)
-    times.append(t)
+            if len(t) == 0 :
+                t = 180
+            else :
+                t = float(t)
+        
+        distances.append(d)
+        times.append(t)
+    else :
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+            
+            # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+            if len(d) == 0 :
+                d = 1000
+            else :
+                d = float(d)
+                
+        with col2:
+            t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+    
+            if len(t) == 0 :
+                t = 180
+            else :
+                t = float(t)
+        with col3:
+            p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
+
+            if len(p) == 0 :
+                p = 500
+            else :
+                p = float(p)
+        
+        distances.append(d)
+        times.append(t)
+        powers.append(p)
 
 
 # Vérifier si les variables existent dans session_state
@@ -1165,3 +1198,4 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
