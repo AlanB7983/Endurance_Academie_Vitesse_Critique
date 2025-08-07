@@ -42,10 +42,12 @@ from fontTools.ttLib import TTCollection
 # =============================================================================
 
 # Fonction pour calculer la vitesse critique avec le modèle hyperbolique
-def calculate_critical_speed(distances, times):
+def calculate_critical_speed(distances, times, use_power_data, powers):
     times = np.array(times)
     speeds = np.array(distances) / times  # Vitesse moyenne pour chaque test
     inverse_times = 1 / times  # Transformation en 1/t
+    if use_power_data :
+        powers = np.array(powers)
 
     # Régression linéaire : V = CS + D'/t s'il y a assez de valeur
     if len(inverse_times) > 1 and times[0] != times[1] :
@@ -54,11 +56,21 @@ def calculate_critical_speed(distances, times):
         CS = intercept  # Ordonnée à l'origine = vitesse critique
         D_prime_0 = slope  # Pente = D'
 
+        # Si on utilise la puissance
+        if use_power_data :
+            # Régression linéaire : P = CP + W'/t
+            slope, intercept, _, _, _ = linregress(inverse_times, powers)
+        
+            CP = intercept  # Ordonnée à l'origine = vitesse critique
+            W_prime_0 = slope  # Pente = D'
+
     # Sinon on met des valeurs random
     else :
         CS = 3
         D_prime_0 = 100
-    return CS, D_prime_0, speeds
+        CP = 0
+        W_prime_0 = 0
+    return CS, D_prime_0, speeds, CP, W_prime_0
 
 # Convertisseurs
 def speed_to_pace(speed_m_s):
@@ -768,8 +780,10 @@ if "CS" not in st.session_state:
 CS = 3
 D_prime_0 = 100
 speeds = [0]
+CP = 10
+W_prime_0 = 100
 # On met à jour en calculant avec les données de test
-CS, D_prime_0, speeds = calculate_critical_speed(distances, times)
+CS, D_prime_0, speeds, CP, W_prime_0 = calculate_critical_speed(distances, times, use_power_data, powers)
 
 # Calcul du point CS_5min
 CS_5min = CS + (D_prime_0 / 300)
@@ -795,6 +809,10 @@ if st.button("Calculer la Vitesse Critique"):
         # Stocker les valeurs dans session_state
         st.session_state.CS = CS
         st.session_state.D_prime_0 = D_prime_0
+
+        if use_power_data :
+            st.session_state.CP = CP
+            st.session_state.W_prime_0 = W_prime_0
 
         # Génération des données pour la courbe
         time_range = np.linspace(20, 2500, 200)  # Étendre jusqu'à 2500 s
@@ -943,7 +961,11 @@ if st.session_state.CS is not None:
     st.success(f"✅ Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
     st.write(f"📌 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
     st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
+    if use_power_data :
+        st.write(f"✅ Puissance Critique estimée : {st.session_state.CP} W")
+        st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.W_prime_0} J")
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
+    
     if Durability > 90 :
         st.write("📌 Profil endurant")
     else :
@@ -1198,4 +1220,5 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
