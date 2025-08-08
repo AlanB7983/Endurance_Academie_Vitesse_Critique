@@ -36,9 +36,24 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 
-os.environ["BROWSER_PATH"]="/usr/bin/chromium"
-
 from fontTools.ttLib import TTCollection
+
+# --- Kaleido/Chromium setup for Streamlit Cloud (headless) ---
+import os, shutil
+
+# 1) aide Kaleido à trouver le binaire
+if "BROWSER_PATH" not in os.environ:
+    # Chemin standard sur les conteneurs Debian/Ubuntu
+    candidate = "/usr/bin/chromium"
+    if shutil.which("chromium"):
+        candidate = shutil.which("chromium")
+    os.environ["BROWSER_PATH"] = candidate  # Kaleido v1 lit cette variable
+
+# 2) optionnel : defaults d’export (format/échelle)
+import plotly.io as pio
+pio.defaults.default_format = "png"
+pio.defaults.default_scale = 3
+# ----------------------------------------------------------------
 
 
 
@@ -1228,6 +1243,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
