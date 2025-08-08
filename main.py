@@ -67,6 +67,9 @@ def calculate_critical_speed(distances, times, use_power_data, powers):
         
             CP = intercept  # Ordonnée à l'origine = vitesse critique
             W_prime_0 = slope  # Pente = D'
+        else :
+            CP = 0
+            W_prime_0 = 0
 
     # Sinon on met des valeurs random
     else :
@@ -962,12 +965,12 @@ if st.session_state.fig is not None:
 
 # Affichage des résultats enregistrés
 if st.session_state.CS is not None:
-    st.success(f"✅ Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
-    st.write(f"📌 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
-    st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
+    st.write(f"💨 Vitesse Critique estimée : {speed_m_s_to_kmh(st.session_state.CS):.2f} km/h")
+    st.write(f"💨 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
+    st.write(f"🔋 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
     if use_power_data :
-        st.write(f"✅ Puissance Critique estimée : {st.session_state.CP} W")
-        st.write(f"📌 D' (capacité anaérobie) estimée : {st.session_state.W_prime_0} J")
+        st.write(f"⚡️ Puissance Critique estimée : {st.session_state.CP} W")
+        st.write(f"🔋 W' (capacité anaérobie) estimée : {st.session_state.W_prime_0} J")
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
     
     if Durability > 90 :
@@ -1224,6 +1227,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
