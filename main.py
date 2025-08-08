@@ -4,6 +4,10 @@ Created on Fri Feb 21 13:41:28 2025
 
 @author: alanb
 """
+import plotly.io as pio
+pio.kaleido.scope.chromium_executable = "/usr/bin/chromium"
+
+
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
@@ -1220,5 +1224,6 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
