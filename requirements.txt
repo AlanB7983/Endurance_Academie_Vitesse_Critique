@@ -4,7 +4,7 @@ numpy
 plotly
 pandas
 reportlab
-kaleido==0.2.1
+kaleido
 scipy
 fonttools
 streamlit-aggrid
