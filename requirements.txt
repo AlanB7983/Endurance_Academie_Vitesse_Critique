@@ -1,10 +1,10 @@
 streamlit
 matplotlib
 numpy
-plotly
+plotly==6.2.0
 pandas
 reportlab
-kaleido==0.2.1
+kaleido==1.0.0
 scipy
 fonttools
 streamlit-aggrid
