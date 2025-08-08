@@ -44,8 +44,7 @@ import os, shutil
 # 1) aide Kaleido à trouver le binaire
 import shutil
 chromium = shutil.which("chromium") or "/usr/bin/chromium"
-os.environ.setdefault("BROWSER_PATH", chromium)---------------------------------
-
+os.environ.setdefault("BROWSER_PATH", chromium)
 
 
 # =============================================================================
@@ -1234,6 +1233,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
