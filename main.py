@@ -39,12 +39,12 @@ from reportlab.pdfbase import pdfmetrics
 from fontTools.ttLib import TTCollection
 
 # --- Kaleido/Chromium setup for Streamlit Cloud (headless) ---
-import os, shutil
-
-# 1) aide Kaleido à trouver le binaire
 import shutil
+import plotly.io as pio
 chromium = shutil.which("chromium") or "/usr/bin/chromium"
 os.environ.setdefault("BROWSER_PATH", chromium)
+pio.defaults.default_format = "png"
+pio.defaults.default_scale = 3
 
 
 # =============================================================================
@@ -1233,6 +1233,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
