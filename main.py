@@ -35,7 +35,8 @@ from PIL import Image as PILImage
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
-import os
+
+os.environ["BROWSER_PATH"]="/usr/bin/chromium"
 
 from fontTools.ttLib import TTCollection
 
@@ -1227,6 +1228,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
