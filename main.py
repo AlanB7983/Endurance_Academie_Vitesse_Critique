@@ -804,14 +804,16 @@ st.subheader("CALCUL DE LA VITESSE CRITIQUE (CS)")
 # saut de ligne
 st.write("\n")
 
-methode1, methode2 = st.columns(2)
+# methode1, methode2 = st.columns(2)
 
-with methode1 :
-    methode1 = st.checkbox("Utiliser des données de test")
-with methode2 :
-    methode2 = st.checkbox("Utiliser des données de compétition")
+# with methode1 :
+#     methode1 = st.checkbox("Utiliser des données de test")
+# with methode2 :
+#     methode2 = st.checkbox("Utiliser des données de compétition")
 
-if methode1 :
+methode = st.radio("", ["Utiliser des données de test", "Utiliser des données de compétition"], horizontal = True, index = 0, label_visibility="collapsed")
+
+if methode == "Utiliser des données de test" :
     st.markdown("### Saisie des données de test")
     
              
@@ -946,8 +948,8 @@ else :
             
             distances.append(d)
             times.append(t)
-
-            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
+            if len(distances) > 2 and len(times) > 2 :
+                distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
             
         else :
             col1, col2, col3 = st.columns(3)
@@ -979,7 +981,8 @@ else :
             times.append(t)
             powers.append(p)
 
-            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
+            if len(distances) > 2 and len(times) > 2 :
+                distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
 
 
 
@@ -1435,6 +1438,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
