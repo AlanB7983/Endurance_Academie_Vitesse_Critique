@@ -947,7 +947,7 @@ else :
             distances.append(d)
             times.append(t)
 
-            distances, times, [2.0, 1.0] = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short: float = 300.0,t_long: float = 1200.0)
+            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short: float = 300.0,t_long: float = 1200.0)
             
         else :
             col1, col2, col3 = st.columns(3)
@@ -1435,6 +1435,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
