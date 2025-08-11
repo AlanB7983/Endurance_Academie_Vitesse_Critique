@@ -984,7 +984,7 @@ else :
             distances, times, powers = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,race_powers,t_short = 300.0,t_long = 1200.0)
     else :
         if len(race_distances) > 1 and len(race_distances) > 1 :
-            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,[0.0, 0.0],t_short = 300.0,t_long = 1200.0)
+            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
 
 
 
@@ -1440,6 +1440,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
