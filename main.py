@@ -576,6 +576,120 @@ def estimate_LT1(cs, d_index):
 
 
 
+import math
+from typing import List, Tuple
+import numpy as np
+import plotly.graph_objects as go
+
+def _fit_powerlaw_xy(x_list, y_list):
+    """
+    Ajuste log(y)=a+b*log(x). Renvoie A=exp(a), B=b.
+    """
+    x = [math.log(float(xi)) for xi in x_list]
+    y = [math.log(float(yi)) for yi in y_list]
+    if len(x_list) == 2:
+        (x1, y1), (x2, y2) = (x[0], y[0]), (x[1], y[1])
+        if x2 == x1:
+            raise ValueError("Deux abscisses identiques pour un fit à 2 points.")
+        B = (y2 - y1) / (x2 - x1)
+        a = y1 - B * x1
+    else:
+        n = len(x)
+        sx, sy = sum(x), sum(y)
+        sxx = sum(xi*xi for xi in x)
+        sxy = sum(xi*yi for xi, yi in zip(x, y))
+        denom = n*sxx - sx*sx
+        if denom == 0:
+            raise ValueError("Données dégénérées pour la régression.")
+        B = (n*sxy - sx*sy) / denom
+        a = (sy - B*sx) / n
+    A = math.exp(a)
+    return A, B
+
+def powerlaw_vitesse_et_puissance_append_points(
+    d: List[float],
+    t: List[float],
+    p: List[float],
+    t_short: float = 300.0,   # 5 minutes
+    t_long: float = 1200.0    # 20 minutes
+) -> Tuple[List[float], List[float], List[float], go.Figure]:
+    """
+    - Ajuste v(t)=A*t^B (v en km/h) à partir de d (m) et t (s)
+    - Ajuste P(t)=C*t^D (P en W) à partir de p (W) et t (s)
+    - Ajoute les points théoriques pour t_short et t_long dans d/t/p
+    - Renvoie la figure Plotly de la power law Vitesse (seulement)
+
+    Returns
+    -------
+    d_out, t_out, p_out, fig
+      d_out : d + [d_5', d_20'] (m)
+      t_out : t + [300, 1200] (s)
+      p_out : p + [P_5', P_20'] (W)
+      fig   : figure Plotly (vitesse vs temps)
+    """
+    # --- validations ---
+    if not (len(d) == len(t) == len(p)):
+        raise ValueError("d, t et p doivent avoir la même longueur.")
+    if len(d) < 2:
+        raise ValueError("Fournir au moins 2 points (d,t,p).")
+    if any(di <= 0 for di in d) or any(ti <= 0 for ti in t) or any(pi <= 0 for pi in p):
+        raise ValueError("Toutes les distances, tous les temps et toutes les puissances doivent être > 0.")
+
+    # --- vitesses observées (km/h) ---
+    v_kmh = [3.6 * di / ti for di, ti in zip(d, t)]
+
+    # --- fit power law vitesse: v(t)=A*t^B ---
+    A_v, B_v = _fit_powerlaw_xy(t, v_kmh)
+
+    # prédictions vitesses
+    v_5_kmh  = A_v * (t_short ** B_v)
+    v_20_kmh = A_v * (t_long  ** B_v)
+
+    # distances associées (m) à 5' et 20'
+    d_5_m  = v_5_kmh  * (t_short / 3600.0) * 1000.0
+    d_20_m = v_20_kmh * (t_long  / 3600.0) * 1000.0
+
+    # --- fit power law puissance: P(t)=C*t^D ---
+    C_p, D_p = _fit_powerlaw_xy(t, p)
+
+    # prédictions puissances (W)
+    P_5 = C_p * (t_short ** D_p)
+    P_20 = C_p * (t_long ** D_p)
+
+    # --- sorties augmentées ---
+    d_out = [d_5_m, d_20_m]
+    t_out = [t_short, t_long]
+    p_out = [P_5, P_20]
+
+    # --- figure (uniquement vitesse) ---
+    t_min = 0.8 * min(min(t), t_short)
+    t_max = 1.2 * max(max(t), t_long)
+    t_range = np.linspace(t_min, t_max, 300)
+    v_pred = A_v * (t_range ** B_v)
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=t_range, y=v_pred,
+        mode="lines", name="Loi puissance v = A·t^B"
+    ))
+    fig.add_trace(go.Scatter(
+        x=t, y=v_kmh,
+        mode="markers", name="Points observés (v)"
+    ))
+    fig.add_trace(go.Scatter(
+        x=[t_short, t_long], y=[v_5_kmh, v_20_kmh],
+        mode="markers", marker_symbol="x", marker_size=10,
+        name="Prédictions 5′ & 20′ (v)"
+    ))
+    fig.update_layout(
+        title="Power law Vitesse (km/h) en fonction du Temps (s)",
+        xaxis_title="Temps (s)",
+        yaxis_title="Vitesse (km/h)",
+        legend_title=None,
+        margin=dict(l=40, r=20, t=60, b=40)
+    )
+
+    return d_out, t_out, p_out, fig
 
 
 
@@ -690,95 +804,183 @@ st.subheader("CALCUL DE LA VITESSE CRITIQUE (CS)")
 # saut de ligne
 st.write("\n")
 
-st.markdown("### Saisie des données de test")
+methode1, methode2 = st.columns(2)
 
-         
-# Crée un état pour stocker l'affichage de l'aide
-#if "show_help" not in st.session_state:
-    #st.session_state.show_help = False
+with methode1 :
+    methode1 = st.checkbox("Utiliser des données de test")
+with methode2 :
+    methode2 = st.checkbox("Utiliser des données de compétition")
 
-# Création de colonnes pour aligner les éléments
-#selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([5, 1, 12])  # Ajuster la largeur pour un bon alignement
-
-#with selec_num_point_col1 :
-    # Sélection du nombre de tests
-st.markdown("**Nombre de tests à entrer :**") 
-num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
-
-#with selec_num_point_col2 :
-    # Bouton pour afficher/masquer l'aide
-    #if st.button("?"):
-        #st.session_state.show_help = not st.session_state.show_help
+if methode1 :
+    st.markdown("### Saisie des données de test")
     
-# Affichage du texte explicatif si le bouton est activé
-#if st.session_state.show_help:
-st.info("Pour davantage de précision sur la détermination de la vitesse critique, la littérature conseille de saisir des durées comprises entre 2 et 20 minutes (voir [1]).")
-
-# saut de ligne
-st.write("\n")
-
-
-# Entrée utilisateur
-st.markdown("**Valeurs des tests :**") 
-# st.markdown("### Valeurs des tests : ") 
-# On coche si on veut renseigner les puissances également
-use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
-
-distances = []
-times = []
-powers = []
-
-for i in range(num_points):
-    if use_power_data == False :
-        col1, col2 = st.columns(2)
-        with col1:
-            d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
-            
-            # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
-            if len(d) == 0 :
-                d = 1000
-            else :
-                d = float(d)
-                
-        with col2:
-            t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+             
+    # Crée un état pour stocker l'affichage de l'aide
+    #if "show_help" not in st.session_state:
+        #st.session_state.show_help = False
     
-            if len(t) == 0 :
-                t = 180
-            else :
-                t = float(t)
+    # Création de colonnes pour aligner les éléments
+    #selec_num_point_col1, selec_num_point_col2, empty_col3 = st.columns([5, 1, 12])  # Ajuster la largeur pour un bon alignement
+    
+    #with selec_num_point_col1 :
+        # Sélection du nombre de tests
+    st.markdown("**Nombre de tests à entrer :**") 
+    num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
+    
+    #with selec_num_point_col2 :
+        # Bouton pour afficher/masquer l'aide
+        #if st.button("?"):
+            #st.session_state.show_help = not st.session_state.show_help
         
-        distances.append(d)
-        times.append(t)
-    else :
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
-            
-            # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
-            if len(d) == 0 :
-                d = 1000
-            else :
-                d = float(d)
-                
-        with col2:
-            t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+    # Affichage du texte explicatif si le bouton est activé
+    #if st.session_state.show_help:
+    st.info("Pour davantage de précision sur la détermination de la vitesse critique, la littérature conseille de saisir des durées comprises entre 3 et 20 minutes (voir [1]).")
     
-            if len(t) == 0 :
-                t = 180
-            else :
-                t = float(t)
-        with col3:
-            p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
-
-            if len(p) == 0 :
-                p = 500
-            else :
-                p = float(p)
+    # saut de ligne
+    st.write("\n")
+    
+    
+    # Entrée utilisateur
+    st.markdown("**Valeurs des tests :**") 
+    # st.markdown("### Valeurs des tests : ") 
+    # On coche si on veut renseigner les puissances également
+    use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
+    
+    distances = []
+    times = []
+    powers = []
+    
+    for i in range(num_points):
+        if use_power_data == False :
+            col1, col2 = st.columns(2)
+            with col1:
+                d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+                
+                # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+                if len(d) == 0 :
+                    d = 1000
+                else :
+                    d = float(d)
+                    
+            with col2:
+                t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
-        distances.append(d)
-        times.append(t)
-        powers.append(p)
+                if len(t) == 0 :
+                    t = 180
+                else :
+                    t = float(t)
+            
+            distances.append(d)
+            times.append(t)
+        else :
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+                
+                # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+                if len(d) == 0 :
+                    d = 1000
+                else :
+                    d = float(d)
+                    
+            with col2:
+                t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+        
+                if len(t) == 0 :
+                    t = 180
+                else :
+                    t = float(t)
+            with col3:
+                p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
+    
+                if len(p) == 0 :
+                    p = 500
+                else :
+                    p = float(p)
+            
+            distances.append(d)
+            times.append(t)
+            powers.append(p)
+
+else :
+    st.markdown("### Saisie des données de course")         
+ 
+    # Sélection du nombre de résultats de course
+    st.markdown("**Nombre de rsultats de course à entrer :**") 
+    num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
+
+        
+    # saut de ligne
+    st.write("\n")
+    
+    
+    # Entrée utilisateur
+    st.markdown("**Valeurs des tests :**") 
+
+    # On coche si on veut renseigner les puissances également
+    use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
+    
+    distances = []
+    times = []
+    powers = []
+    
+    for i in range(num_points):
+        if use_power_data == False :
+            col1, col2 = st.columns(2)
+            with col1:
+                d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+                
+                # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+                if len(d) == 0 :
+                    d = 1000
+                else :
+                    d = float(d)
+                    
+            with col2:
+                t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+        
+                if len(t) == 0 :
+                    t = 180
+                else :
+                    t = float(t)
+            
+            distances.append(d)
+            times.append(t)
+
+            distances, times, [2.0, 1.0] = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short: float = 300.0,t_long: float = 1200.0)
+            
+        else :
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                d = st.text_input(f"Distance {i+1} (m)", placeholder="0")
+                
+                # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
+                if len(d) == 0 :
+                    d = 1000
+                else :
+                    d = float(d)
+                    
+            with col2:
+                t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
+        
+                if len(t) == 0 :
+                    t = 180
+                else :
+                    t = float(t)
+            with col3:
+                p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
+    
+                if len(p) == 0 :
+                    p = 500
+                else :
+                    p = float(p)
+            
+            distances.append(d)
+            times.append(t)
+            powers.append(p)
+
+            distances, times, powers = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short: float = 300.0,t_long: float = 1200.0)
+
 
 
 # Vérifier si les variables existent dans session_state
@@ -1233,6 +1435,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
