@@ -1143,8 +1143,7 @@ if st.button("Calculer la Vitesse Critique"):
 
         # Stocker le graphique dans session_state
         st.session_state.fig = fig
-        st.write("\n")
-        st.plotly_chart(power_law_fig, use_container_width=True)
+        
         
 
     else:
@@ -1229,7 +1228,8 @@ if st.session_state.CS is not None:
     
     fig_domaines.write_image(Domaines_graph_path, scale=4) 
     
-
+    st.write("\n")
+    st.plotly_chart(power_law_fig, use_container_width=True)
 
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
@@ -1442,6 +1442,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
