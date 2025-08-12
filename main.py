@@ -663,7 +663,7 @@ def powerlaw_vitesse_et_puissance_append_points(
 
     # --- figure (uniquement vitesse) ---
     t_min = 0.8 * min(min(t), t_short)
-    t_max = 1.2 * max(max(t), t_long)
+    t_max = 18.0 * t_long
     t_range = np.linspace(t_min, t_max, 300)
     v_pred = A_v * (t_range ** B_v)
 
@@ -682,12 +682,48 @@ def powerlaw_vitesse_et_puissance_append_points(
         name="Prédictions 5′ & 20′ (v)"
     ))
     fig.update_layout(
-        title="Power law Vitesse (km/h) en fonction du Temps (s)",
-        xaxis_title="Temps (s)",
-        yaxis_title="Vitesse (km/h)",
-        legend_title=None,
-        margin=dict(l=40, r=20, t=60, b=40)
-    )
+        autosize=False,  # Désactive l'ajustement automatique de la taille
+        width=800,  # Largeur fixe du graphe
+        height=400,  # Hauteur fixe du graphe
+        plot_bgcolor='white',  # Fond du graphe en blanc pour éviter des problèmes de rendu
+        paper_bgcolor='white',  # Fond du "papier" du graphe en blanc aussi
+        margin=dict(t=40, b=0),  # Supprime l'espace réservé au titre et en bas du graphe
+        # plot_bgcolor="rgba(0,0,0,0)",  # Fond du graphe transparent
+        # paper_bgcolor="rgba(0,0,0,0)",  # Fond extérieur transparent
+        xaxis=dict(
+            title = dict(text = "Temps (s)", font = dict(color = 'black')),
+            showline=True,  # Afficher la barre de l'axe X
+            linecolor='black',  # Couleur de la barre de l'axe X 
+            linewidth=0.5,  # Largeur de la barre de l'axe X
+            range=[0, t_max], 
+            showgrid=False,
+            tickformat='.0f',
+            tickfont=dict(color='black')
+            ),
+        yaxis=dict(
+            title = dict(text = "Vitesse (km/h)", font = dict(color = 'black')),
+            showline=True,  # Afficher la barre de l'axe Y
+            linecolor='black',  # Couleur de la barre de l'axe Y
+            linewidth=0.5,  # Largeur de la barre de l'axe Y
+            #range=[0.5*CS*3.6, max(speed_pred)*0.8], 
+            showgrid=False,
+            tickformat='.1f',
+            tickfont=dict(color='black')
+            ),
+        legend=dict(
+            x=0.95, y=0.95, xanchor='right', yanchor='top',
+            bordercolor='#453E3B', borderwidth=0.5
+            ),
+        template="plotly_white"
+        # template=None
+        )
+    #fig.update_layout(
+    #    title="Power law Vitesse (km/h) en fonction du Temps (s)",
+    #    xaxis_title="Temps (s)",
+    #    yaxis_title="Vitesse (km/h)",
+    #    legend_title=None,
+    #    margin=dict(l=40, r=20, t=60, b=40)
+    #)
 
     return d_out, t_out, p_out, fig
 
@@ -1447,6 +1483,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
