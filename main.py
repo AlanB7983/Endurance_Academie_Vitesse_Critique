@@ -380,8 +380,8 @@ def header_footer(canvas, doc):
     canvas.drawString(6.95 * inch, 10.5 * inch, full_date)
     
     # Ajouter le logo en haut à gauche 
-    logo_path_full_name_noir = "Pictures/__LOGO_EA_NOIR.png"  # Le chemin vers votre logo
-    logo_path_badge_orange = "Pictures/__LOGO_EABADGE_ORANGE.png" # Le chemin vers votre logo
+    logo_path_full_name_noir = "Pictures/__LOGO_ECLAB_NOIR.png"  # Le chemin vers votre logo
+    logo_path_badge_orange = "Pictures/__LOGO_ECBADGE2_ORANGE.png" # Le chemin vers votre logo
     canvas.drawImage(logo_path_badge_orange, 0.5 * inch, 9.9 * inch, width=1.0 * inch, height=1.0 * inch, preserveAspectRatio=True)
     
     # Dessiner le pied de page avec le numéro de page
@@ -771,7 +771,7 @@ def powerlaw_vitesse_et_puissance_append_points(
 
 
 # Configuration du titre de la page et du logo
-st.set_page_config(page_title="Vitesse Critique", page_icon="Pictures/__LOGO_EAICONE_NOIR.png")
+st.set_page_config(page_title="Vitesse Critique", page_icon="Pictures/__LOGO_ECICONE_NOIR.png")
 
 
 
@@ -804,7 +804,7 @@ pdfmetrics.registerFont(TTFont('StretchPro', 'Polices/StretchPro.ttf'))
 col1_logo, col2_logo, col3_logo = st.columns([1, 2, 1])  # Ajuste les proportions
 
 with col1_logo:
-    st.image("Pictures/__LOGO_EA_ORANGE.png", use_container_width=True)
+    st.image("Pictures/__LOGO_ECLAB_ORANGE.png", use_container_width=True)
 
 
 
@@ -1538,6 +1538,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
