@@ -1051,17 +1051,13 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        st.write("if")
-        if len(distances) > 1 and len(distances) > 1 :
-            st.write("if level2")
-            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
-            st.plotly_chart(power_law_fig, use_container_width=True)
-    else :
-        st.write(distances)
         if distances[0] != 1000 :
-            st.write("else level2")
+            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
+            #st.plotly_chart(power_law_fig, use_container_width=True)
+    else :
+        if distances[0] != 1000 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
-            st.plotly_chart(power_law_fig, use_container_width=True)
+            #st.plotly_chart(power_law_fig, use_container_width=True)
 
 
 # Vérifier si les variables existent dans session_state
@@ -1304,8 +1300,10 @@ if st.session_state.CS is not None:
     
     fig_domaines.write_image(Domaines_graph_path, scale=4) 
     
-    #st.write("\n")
-    #st.plotly_chart(power_law_fig, use_container_width=True)
+    st.write("\n")
+    afficher_power_law = st.checkbox("Afficher la power law")
+    if afficher_power_law :
+        st.plotly_chart(power_law_fig, use_container_width=True)
 
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
@@ -1518,6 +1516,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
