@@ -698,6 +698,7 @@ def powerlaw_vitesse_et_puissance_append_points(
     fig.add_trace(go.Scatter(
         x=t_range, y=v_pred,
         mode="lines", name="Loi puissance v = A·t^B",
+        line=dict(color='#453E3B', width=2),
         customdata=custom_curve,
         hovertemplate=(
             "t = %{customdata[0]}<br>"
@@ -713,11 +714,11 @@ def powerlaw_vitesse_et_puissance_append_points(
         marker=dict(color='#AA3D00', size=8),
         name="Points observés (v)"
     ))
-    fig.add_trace(go.Scatter(
-        x=[t_short, t_long], y=[v_5_kmh, v_20_kmh],
-        mode="markers", marker_symbol="x", marker_size=10,
-        name="Prédictions 5′ & 20′ (v)"
-    ))
+    # fig.add_trace(go.Scatter(
+    #     x=[t_short, t_long], y=[v_5_kmh, v_20_kmh],
+    #     mode="markers", marker_symbol="x", marker_size=10,
+    #     name="Prédictions 5′ & 20′ (v)"
+    # ))
     fig.update_layout(
         autosize=False,  # Désactive l'ajustement automatique de la taille
         width=800,  # Largeur fixe du graphe
@@ -976,6 +977,16 @@ if methode == "Utiliser des données de test" :
             distances.append(d)
             times.append(t)
             powers.append(p)
+            
+    if use_power_data :
+        if distances[0] != 1000 :
+            temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
+            #st.plotly_chart(power_law_fig, use_container_width=True)
+    else :
+        if distances[0] != 1000 :
+            temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
+            #st.plotly_chart(power_law_fig, use_container_width=True)
+
 
 else :
     st.markdown("### Saisie des données de course")         
@@ -1527,6 +1538,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
