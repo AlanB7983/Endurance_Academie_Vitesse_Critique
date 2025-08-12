@@ -672,7 +672,7 @@ def powerlaw_vitesse_et_puissance_append_points(
     fig.add_trace(go.Scatter(
         x=t_range, y=v_pred,
         mode="lines", name="Loi puissance v = A·t^B",
-        ustomdata=dist_curve_m,
+        customdata=dist_curve_m,
         hovertemplate=(
             "t = %{x:.0f} s<br>"
             "v = %{y:.2f} km/h<br>"
@@ -1491,6 +1491,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
