@@ -709,7 +709,9 @@ def powerlaw_vitesse_et_puissance_append_points(
     ))
     fig.add_trace(go.Scatter(
         x=t, y=v_kmh,
-        mode="markers", name="Points observés (v)"
+        mode="markers", 
+        marker=dict(color='#AA3D00', size=8),
+        name="Points observés (v)"
     ))
     fig.add_trace(go.Scatter(
         x=[t_short, t_long], y=[v_5_kmh, v_20_kmh],
@@ -1305,6 +1307,15 @@ if st.session_state.CS is not None:
     if afficher_power_law :
         st.plotly_chart(power_law_fig, use_container_width=True)
 
+        # On affiche la légende du graphe
+        st.markdown(
+            "<p style='text-align: center; font-size:15px; color:darkgray; font-style:italic;'>"
+            "Power law"
+            "</p>",
+            unsafe_allow_html=True
+        )
+        st.write("\n\n")  # Deux lignes vides
+
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
 # =============================================================================
@@ -1516,6 +1527,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
