@@ -666,11 +666,19 @@ def powerlaw_vitesse_et_puissance_append_points(
     t_max = 18.0 * t_long
     t_range = np.linspace(t_min, t_max, 300)
     v_pred = A_v * (t_range ** B_v)
+    dist_curve_m = v_pred * (t_range / 3600.0) * 1000.0
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=t_range, y=v_pred,
-        mode="lines", name="Loi puissance v = A·t^B"
+        mode="lines", name="Loi puissance v = A·t^B",
+        ustomdata=dist_curve_m,
+        hovertemplate=(
+            "t = %{x:.0f} s<br>"
+            "v = %{y:.2f} km/h<br>"
+            "d = %{customdata:.0f} m"
+            "<extra>Loi puissance</extra>"
+        )
     ))
     fig.add_trace(go.Scatter(
         x=t, y=v_kmh,
@@ -1483,6 +1491,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
