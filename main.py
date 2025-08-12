@@ -51,6 +51,28 @@ from fontTools.ttLib import TTCollection
 # FONCTIONS
 # =============================================================================
 
+
+
+def _fmt_hhmmss(seconds: float) -> str:
+    s = int(round(seconds))
+    h = s // 3600
+    m = (s % 3600) // 60
+    s = s % 60
+    return f"{h:02d}:{m:02d}:{s:02d}"
+
+def _pace_str_from_kmh(v_kmh: float) -> str:
+    if v_kmh <= 0:
+        return "—"
+    pace_min = 60.0 / v_kmh
+    mm = int(pace_min)
+    ss = int(round((pace_min - mm) * 60))
+    if ss == 60:
+        ss = 0
+        mm += 1
+    return f"{mm:02d}:{ss:02d} /km"
+
+
+
 # Fonction pour calculer la vitesse critique avec le modèle hyperbolique
 def calculate_critical_speed(distances, times, use_power_data, powers):
     times = np.array(times)
@@ -666,17 +688,22 @@ def powerlaw_vitesse_et_puissance_append_points(
     t_max = 18.0 * t_long
     t_range = np.linspace(t_min, t_max, 300)
     v_pred = A_v * (t_range ** B_v)
-    dist_curve_m = v_pred * (t_range / 3600.0) * 1000.0
+    time_str_curve = [_fmt_hhmmss(ti) for ti in t_range]
+    dist_curve_km  = v_pred * (t_range / 3600.0)           # km
+    pace_str_curve = [_pace_str_from_kmh(v) for v in v_pred]
+    custom_curve   = list(zip(time_str_curve, dist_curve_km, pace_str_curve))
+
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=t_range, y=v_pred,
         mode="lines", name="Loi puissance v = A·t^B",
-        customdata=dist_curve_m,
+        customdata=custom_curve,
         hovertemplate=(
-            "t = %{x:.0f} s<br>"
+            "t = %{customdata[0]}<br>"
             "v = %{y:.2f} km/h<br>"
-            "d = %{customdata:.0f} m"
+            "d = %{customdata[1]:.2f} km<br>"
+            "allure = %{customdata[2]}"
             "<extra>Loi puissance</extra>"
         )
     ))
@@ -1491,6 +1518,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
