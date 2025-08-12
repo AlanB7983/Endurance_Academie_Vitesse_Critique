@@ -993,9 +993,9 @@ else :
     # On coche si on veut renseigner les puissances également
     use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
     
-    race_distances = []
-    race_times = []
-    race_powers = []
+    distances = []
+    times = []
+    powers = []
     
     for i in range(num_points):
         if use_power_data == False :
@@ -1017,8 +1017,8 @@ else :
                 else :
                     t = float(t)
             
-            race_distances.append(d)
-            race_times.append(t)
+            distances.append(d)
+            times.append(t)
             
         else :
             col1, col2, col3 = st.columns(3)
@@ -1046,21 +1046,21 @@ else :
                 else :
                     p = float(p)
             
-            race_distances.append(d)
-            race_distances.append(t)
-            race_powers.append(p)
+            distances.append(d)
+            distances.append(t)
+            powers.append(p)
     # st.write(race_distances)
     if use_power_data :
         st.write("if")
         if len(race_distances) > 1 and len(race_distances) > 1 :
             st.write("if level2")
-            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,race_powers,t_short = 300.0,t_long = 1200.0)
+            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 1200.0)
             st.plotly_chart(power_law_fig, use_container_width=True)
     else :
         st.write(race_distances)
         if race_distances[0] != 1000 :
             st.write("else level2")
-            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
+            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
             st.plotly_chart(power_law_fig, use_container_width=True)
 
 
@@ -1518,6 +1518,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
