@@ -1057,7 +1057,7 @@ else :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,race_powers,t_short = 300.0,t_long = 1200.0)
             st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        st.write("else")
+        st.write(len(race_distances))
         if len(race_distances) > 1 and len(race_distances) > 1 :
             st.write("else level2")
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(race_distances,race_times,[2.0, 1.0],t_short = 300.0,t_long = 1200.0)
@@ -1518,6 +1518,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
