@@ -119,7 +119,7 @@ def speed_m_s_to_kmh(speed_m_s):
     """Convertit une vitesse en m/s en km/h."""
     return speed_m_s * 3.6
 
-def generate_training_zone_graph(pace_values, use_power_data, power_values):
+def generate_training_zone_graph(pace_values, use_power_data):
     """
     Génère un graphique des zones d'entraînement avec allure (min/km),
     fréquence cardiaque et échelle RPE.
@@ -171,7 +171,7 @@ def generate_training_zone_graph(pace_values, use_power_data, power_values):
     # Ajout des lignes verticales pour les seuils
     L_i = [5, 7, 7.5]
     if use_power_data :
-        for i, (label, pace) in enumerate(pace_values.items()) and power in enumerate(power_values.items()):
+        for i, (label, pace) in enumerate(pace_values.items()) :
             indice = L_i[i]
             fig.add_trace(go.Scatter(
                 x=[indice, indice], y=[-0.08, 1.08],
@@ -179,7 +179,7 @@ def generate_training_zone_graph(pace_values, use_power_data, power_values):
                 name=label
             ))
             fig.add_annotation(
-                x=indice, y=1.45, text=f"{label}<br>{pace}<br>{power}", showarrow=False,
+                x=indice, y=1.45, text=f"{label}<br>{pace[0]}<br>{pace[1]}", showarrow=False,
                 font=dict(size=10, color="#453E3B")
             )
     else :
@@ -1314,19 +1314,18 @@ if st.session_state.CS is not None:
     LT1_pace_without_unit = LT1_pace[:4]
     CS_pace_without_unit = CS_pace[:4]
     if use_power_data :
-        power_values = {
-            "LT1 / VT1": LT1_percent*CP/100,
-            "LT2": 0.95*CP,
-            "VC": CP
+        pace_values = {
+            "LT1 / VT1": [LT1_pace_without_unit, LT1_percent*CP/100],
+            "LT2": [LT2_pace_without_unit, 0.95*CP],
+            "VC": [CS_pace_without_unit, CP]
         }
-    else :
-        power_values = {}
+
     pace_values = {
         "LT1 / VT1": LT1_pace_without_unit,
         "LT2": LT2_pace_without_unit,
         "VC": CS_pace_without_unit
     }
-    fig_domaines = generate_training_zone_graph(pace_values, use_power_data, power_values)
+    fig_domaines = generate_training_zone_graph(pace_values, use_power_data)
     st.plotly_chart(fig_domaines, use_container_width=False)
 
     # On affiche la légende du graphe
@@ -1578,6 +1577,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
