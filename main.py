@@ -1316,7 +1316,7 @@ if st.session_state.CS is not None:
     st.write("\n")
     afficher_power_law = st.checkbox("Afficher la power law")
     if afficher_power_law :
-        st.write("La power law modélise la relation performance–temps (v(t)=A\cdot t^{B}). Les records saisis permettent de déterminer cette courbe, puis à estimer les vitesses théoriquement soutenables sur 5′ et 20′ afin de calculer la vitesse critique à partir de durées recommandées par la littérature. La précision du calcul de la vitesse critique est donc meilleure si les records sont proches d’environ 20′ (p. ex. 5 km et 10 km plutôt que semi-marathon et marathon).")
+        st.write("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). Les records saisis permettent de déterminer cette courbe, puis à estimer les vitesses théoriquement soutenables sur 5′ et 20′ afin de calculer la vitesse critique à partir de durées recommandées par la littérature. La précision du calcul de la vitesse critique est donc meilleure si les records sont proches d’environ 20′ (p. ex. 5 km et 10 km plutôt que semi-marathon et marathon).")
         st.write("Le modèle de power law permet aussi d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
         st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1540,6 +1540,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
