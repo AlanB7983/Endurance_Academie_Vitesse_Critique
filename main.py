@@ -171,7 +171,10 @@ def generate_training_zone_graph(pace_values, use_power_data):
     # Ajout des lignes verticales pour les seuils
     L_i = [5, 7, 7.5]
     if use_power_data :
+        
         for i, (label, pace) in enumerate(pace_values.items()) :
+            st.write("pace", pace)
+            
             indice = L_i[i]
             fig.add_trace(go.Scatter(
                 x=[indice, indice], y=[-0.08, 1.08],
@@ -1577,6 +1580,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
