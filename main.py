@@ -37,6 +37,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 
 from fontTools.ttLib import TTCollection
+from decimal import Decimal, ROUND_HALF_UP
+
 
 # --- Kaleido/Chromium setup for Streamlit Cloud (headless) ---
 #import shutil
@@ -50,6 +52,27 @@ from fontTools.ttLib import TTCollection
 # =============================================================================
 # FONCTIONS
 # =============================================================================
+
+
+
+
+def arrondir_liste(valeurs: list[float], decimales: int):
+    """
+    Renvoie une nouvelle liste où chaque valeur est arrondie à `decimales`.
+    - Si decimales == 0 : renvoie des int
+    - Sinon : renvoie des float
+    Arrondi utilisé : HALF_UP (0.5 -> vers le haut)
+    """
+    if decimales < 0:
+        raise ValueError("`decimales` doit être >= 0")
+
+    # Pas de problème de binaire: on passe par str(v)
+    quantum = Decimal('1').scaleb(-decimales)  # équiv. à Decimal('1e-{}'.format(decimales))
+    sortie = []
+    for v in valeurs:
+        d = Decimal(str(v)).quantize(quantum, rounding=ROUND_HALF_UP)
+        sortie.append(int(d) if decimales == 0 else float(d))
+    return sortie
 
 
 
@@ -536,7 +559,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(Spacer(1, 12))  # Ajouter un espace entre les graphes
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
-    text = Paragraph("La vitesse critique de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + " min/km. Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
+    text = Paragraph("La vitesse critique de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + ". Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
     elements.append(text)
     # text = Paragraph("Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
     # elements.append(text)
@@ -564,7 +587,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     text = Paragraph("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).", normal_style)
     elements.append(text)                 
     
-    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+    # elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
     
     # Ajustement de la largeur et de la hauteur du graphe 
     Domaines_graph = Image(Domaines_graph_path)
@@ -1109,8 +1132,11 @@ L_speeds = speeds.tolist()
 L_allures = []
 for i in range(0, len(L_speeds)) :
     L_allures.append(speed_to_pace(float(L_speeds[i])))
-df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure moyenne [min/km]" : L_allures})
 
+if use_power_data :
+    df_test = pd.DataFrame({"Distance [m]": arrondir_liste(distances, 0), "Temps [s]": times, "Allure moyenne [min/km]" : L_allures, "Puissance moyenne [W]" : arrondir_liste(powers, 0)})
+else :
+    df_test = pd.DataFrame({"Distance [m]": arrondir_liste(distances, 0), "Temps [s]": times, "Allure moyenne [min/km]" : L_allures})
 # Conversion de CS en km/h et en allure min/km
 CS_kmh = speed_m_s_to_kmh(CS)
 CS_pace = speed_to_pace(CS)
@@ -1594,6 +1620,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
