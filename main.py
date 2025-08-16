@@ -1050,7 +1050,7 @@ else :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 180
+                    t = 10
                 else :
                     t = float(t)
             
@@ -1072,14 +1072,14 @@ else :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 180
+                    t = 10
                 else :
                     t = float(t)
             with col3:
                 p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
     
                 if len(p) == 0 :
-                    p = 500
+                    p = 10
                 else :
                     p = float(p)
             
@@ -1088,11 +1088,11 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        if distances[0] != 10 :
+        if distances[0] != 10 and times[0] != 10 and powers[0] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 10 :
+        if distances[0] != 10 and times[0] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1130,6 +1130,8 @@ df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure m
 # Conversion de CS en km/h et en allure min/km
 CS_kmh = speed_m_s_to_kmh(CS)
 CS_pace = speed_to_pace(CS)
+
+st.write(CS)
 
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
@@ -1581,6 +1583,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
