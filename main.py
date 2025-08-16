@@ -1322,12 +1322,12 @@ if st.session_state.CS is not None:
             "LT2": [LT2_pace_without_unit, 0.95*CP],
             "VC": [CS_pace_without_unit, CP]
         }
-
-    pace_values = {
-        "LT1 / VT1": LT1_pace_without_unit,
-        "LT2": LT2_pace_without_unit,
-        "VC": CS_pace_without_unit
-    }
+    else :
+        pace_values = {
+            "LT1 / VT1": LT1_pace_without_unit,
+            "LT2": LT2_pace_without_unit,
+            "VC": CS_pace_without_unit
+        }
     fig_domaines = generate_training_zone_graph(pace_values, use_power_data)
     st.plotly_chart(fig_domaines, use_container_width=False)
 
@@ -1580,6 +1580,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
