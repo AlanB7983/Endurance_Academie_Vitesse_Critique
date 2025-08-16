@@ -511,14 +511,14 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
     
     
-    col_widths = [120, 120]
+    col_widths = [110, 110]
     
     #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
     table_test = create_table(L_test, col_widths)
 
     
     elements.append(table_test)
-    legend = Paragraph("Tableau 1 : Résumé des valeurs de test utilisées pour déterminer la vitesse critique", legend_style)
+    legend = Paragraph("Tableau 1 : Résumé des valeurs de test utilisées/estimées pour déterminer la vitesse critique", legend_style)
     elements.append(legend)
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
     
@@ -530,7 +530,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     # Saut de page
     #elements.append(PageBreak())
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
-    subtitle_2 = Paragraph("Courbe de vitesse critique", subtitle2_style)
+    subtitle_2 = Paragraph("Résultats de vitesse critique", subtitle2_style)
     elements.append(subtitle_2)
     #elements.append(Spacer(1, 6))  # Ajouter un espace entre les graphes
   
@@ -559,11 +559,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(Spacer(1, 12))  # Ajouter un espace entre les graphes
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
-    text = Paragraph("La vitesse critique de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + ". Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
-    elements.append(text)
-    # text = Paragraph("Pour rappel, cette intensité permet de délimiter le domaine d'intensité lourd et le domaine d'intensité sévère.", normal_style)
-    # elements.append(text)
-    text = Paragraph("La résèrve anaérobie D' correspondante est de " + str(round(D_prime_0, 1)) + " m.", normal_style)
+    text = Paragraph("La vitesse critique de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + ".", normal_style)
     elements.append(text)
     text = Paragraph("L'indice de durabilité, calculé à partir de la vitesse limite sur 5 minutes et de la vitesse critique, est de " + str(Durability) + " %.", normal_style)
     elements.append(text)
@@ -1620,6 +1616,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
