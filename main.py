@@ -1316,9 +1316,9 @@ if st.session_state.CS is not None:
     CS_pace_without_unit = CS_pace[:4]
     if use_power_data :
         pace_values = {
-            "LT1 / VT1": [LT1_pace_without_unit, str(round(LT1_percent*CP/100, 0) + " W")],
-            "LT2": [LT2_pace_without_unit, str(round(0.95*CP, 0) + " W")],
-            "VC": [CS_pace_without_unit, str(round(CP, 0) + " W")]
+            "LT1 / VT1": [LT1_pace_without_unit, str(round(LT1_percent*CP/100, 0)) + " W"],
+            "LT2": [LT2_pace_without_unit, str(round(0.95*CP, 0)) + " W"],
+            "VC": [CS_pace_without_unit, str(round(CP, 0)) + " W"]
         }
     else :
         pace_values = {
@@ -1578,6 +1578,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
