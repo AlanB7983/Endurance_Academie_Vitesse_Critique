@@ -1107,7 +1107,7 @@ if "CS" not in st.session_state:
 # Calcul de la vitesse critique
 # On initialise les valeurs
 if use_power_data :
-    if distances[num_points-1] != 10 and times[num_points-1] != 10 and powers[num_points-1] != 10 :
+    if distances[num_points-1] == 10 and times[num_points-1] == 10 and powers[num_points-1] == 10 :
         CS = 3
         D_prime_0 = 100
         speeds = [0]
@@ -1118,7 +1118,7 @@ if use_power_data :
         CS, D_prime_0, speeds, CP, W_prime_0 = calculate_critical_speed(distances, times, use_power_data, powers)
 
 else :
-    if distances[num_points-1] != 10 and times[num_points-1] != 10 :
+    if distances[num_points-1] == 10 and times[num_points-1] == 10 :
         CS = 3
         D_prime_0 = 100
         speeds = [0]
@@ -1599,6 +1599,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
