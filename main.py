@@ -958,7 +958,7 @@ if methode == "Utiliser des données de test" :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 10
+                    d = 170000
                 else :
                     d = float(d)
                     
@@ -966,7 +966,7 @@ if methode == "Utiliser des données de test" :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 100000
+                    t = 86400
                 else :
                     t = float(t)
             
@@ -1003,11 +1003,11 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[num_points-1] != 10 and times[num_points-1] != 100000 and powers[num_points-1] != 10 :
+        if distances[num_points-1] != 10 and times[num_points-1] != 10 and powers[num_points-1] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[num_points-1] != 10 and times[num_points-1] != 100000 :
+        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1302,8 +1302,35 @@ if st.session_state.CS is not None:
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
     
     if Durability > 90 :
+        st.markdown("""
+            <div style="
+                padding: 1rem 1.25rem;
+                border: 1px solid #badbcc;
+                background: #d1e7dd;
+                color: #0f5132;
+                border-radius: 0.5rem;
+                text-align: center;
+                font-weight: 500;
+            ">
+              Profil ENDURANT
+            </div>
+            """, unsafe_allow_html=True)
+        
         st.success("Profil ENDURANT")
     else :
+        st.markdown("""
+            <div style="
+                padding: 1rem 1.25rem;
+                border: 1px solid #badbcc;
+                background: #d1e7dd;
+                color: #0f5132;
+                border-radius: 0.5rem;
+                text-align: center;
+                font-weight: 500;
+            ">
+              Profil RAPIDE
+            </div>
+            """, unsafe_allow_html=True)
         st.success("Profil RAPIDE")
 
     st.write("\n\n")  # Deux lignes vides
@@ -1586,6 +1613,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
