@@ -1003,11 +1003,11 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[0] != 10 and times[0] != 10 and powers[0] != 10 :
+        if distances[num_points] != 10 and times[num_points] != 10 and powers[num_points] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 10 and times[0] != 10 :
+        if distances[num_points] != 10 and times[num_points] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1088,11 +1088,11 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        if distances[0] != 10 and times[0] != 10 and powers[0] != 10 :
+        if distances[num_points] != 10 and times[num_points] != 10 and powers[num_points] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 10 and times[0] != 10 :
+        if distances[num_points] != 10 and times[num_points] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1583,6 +1583,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
