@@ -208,7 +208,7 @@ def generate_training_zone_graph(pace_values, use_power_data):
     ))
     rpe_value = rpe_values[0]
     fig.add_annotation(
-        x=2, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
+        x=2,5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
     )
     
     fig.add_trace(go.Scatter(
@@ -218,7 +218,7 @@ def generate_training_zone_graph(pace_values, use_power_data):
     ))
     rpe_value = rpe_values[1]
     fig.add_annotation(
-        x=5.5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[1])
+        x=6, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[1])
     )
     
     fig.add_trace(go.Scatter(
@@ -1292,14 +1292,14 @@ if st.session_state.CS is not None:
     st.write(f"💨 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
     st.write(f"🔋 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
     if use_power_data :
-        st.write(f"⚡️ Puissance Critique estimée : {round(st.session_state.CP, 0)} W")
-        st.write(f"🔋 W' (capacité anaérobie) estimée : {round(st.session_state.W_prime_0, 0)} J")
+        st.write(f"⚡️ Puissance Critique estimée : {int(round(st.session_state.CP, 0))} W")
+        st.write(f"🔋 W' (capacité anaérobie) estimée : {int(round(st.session_state.W_prime_0, 0))} J")
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
     
     if Durability > 90 :
-        st.write("📌 Profil endurant")
+        st.info("Profil ENDURANT")
     else :
-        st.write("📌 Profil rapide")
+        st.info("Profil RAPIDE")
 
 
     st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
@@ -1316,9 +1316,9 @@ if st.session_state.CS is not None:
     CS_pace_without_unit = CS_pace[:4]
     if use_power_data :
         pace_values = {
-            "LT1 / VT1": [LT1_pace_without_unit, str(round(LT1_percent*CP/100, 0)) + " W"],
-            "LT2": [LT2_pace_without_unit, str(round(0.95*CP, 0)) + " W"],
-            "VC": [CS_pace_without_unit, str(round(CP, 0)) + " W"]
+            "LT1 / VT1": [LT1_pace_without_unit, str(int(round(LT1_percent*CP/100, 0))) + " W"],
+            "LT2": [LT2_pace_without_unit, str(int(round(0.95*CP, 0))) + " W"],
+            "VC": [CS_pace_without_unit, str(int(round(CP, 0))) + " W"]
         }
     else :
         pace_values = {
@@ -1579,6 +1579,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
