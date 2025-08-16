@@ -173,8 +173,6 @@ def generate_training_zone_graph(pace_values, use_power_data):
     if use_power_data :
         
         for i, (label, pace) in enumerate(pace_values.items()) :
-            st.write("pace", pace)
-            
             indice = L_i[i]
             fig.add_trace(go.Scatter(
                 x=[indice, indice], y=[-0.08, 1.08],
@@ -182,7 +180,7 @@ def generate_training_zone_graph(pace_values, use_power_data):
                 name=label
             ))
             fig.add_annotation(
-                x=indice, y=1.45, text=f"{label}<br>{pace[0]}<br>{pace[1]}", showarrow=False,
+                x=indice, y=1.40, text=f"{label}<br>{pace[0]}<br>{pace[1]}", showarrow=False,
                 font=dict(size=10, color="#453E3B")
             )
     else :
@@ -200,13 +198,13 @@ def generate_training_zone_graph(pace_values, use_power_data):
 
 
     # Ajout de l'échelle RPE en bas
-    rpe_values = ["0-4", "4-7", "7-7.5", "7.5-9", "9-10"]
+    rpe_values = ["0-5", "5-7", "7-7.5", "7.5-9", "9-10"]
     rpe_colors = ["#A8C686", "#F8C900", "#F27B00", "#AA3D00", "#453E3B"]
     
     fig.add_trace(go.Scatter(
-        x=[0, 4], y=[-0.1, -0.1],
+        x=[0, 5], y=[-0.1, -0.1],
         mode="lines", line=dict(color=rpe_colors[0], width=3),
-        name="RPE 0-4", showlegend=False
+        name="RPE 0-5", showlegend=False
     ))
     rpe_value = rpe_values[0]
     fig.add_annotation(
@@ -214,9 +212,9 @@ def generate_training_zone_graph(pace_values, use_power_data):
     )
     
     fig.add_trace(go.Scatter(
-        x=[4, 7], y=[-0.1, -0.1],
+        x=[5, 7], y=[-0.1, -0.1],
         mode="lines", line=dict(color=rpe_colors[1], width=3),
-        name="RPE 4-7", showlegend=False
+        name="RPE 5-7", showlegend=False
     ))
     rpe_value = rpe_values[1]
     fig.add_annotation(
@@ -1294,8 +1292,8 @@ if st.session_state.CS is not None:
     st.write(f"💨 Allure correspondante : {speed_to_pace(st.session_state.CS)}")
     st.write(f"🔋 D' (capacité anaérobie) estimée : {st.session_state.D_prime_0:.2f} m")
     if use_power_data :
-        st.write(f"⚡️ Puissance Critique estimée : {st.session_state.CP} W")
-        st.write(f"🔋 W' (capacité anaérobie) estimée : {st.session_state.W_prime_0} J")
+        st.write(f"⚡️ Puissance Critique estimée : {round(st.session_state.CP, 0)} W")
+        st.write(f"🔋 W' (capacité anaérobie) estimée : {round(st.session_state.W_prime_0, 0)} J")
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
     
     if Durability > 90 :
@@ -1318,9 +1316,9 @@ if st.session_state.CS is not None:
     CS_pace_without_unit = CS_pace[:4]
     if use_power_data :
         pace_values = {
-            "LT1 / VT1": [LT1_pace_without_unit, LT1_percent*CP/100],
-            "LT2": [LT2_pace_without_unit, 0.95*CP],
-            "VC": [CS_pace_without_unit, CP]
+            "LT1 / VT1": [LT1_pace_without_unit, str(round(LT1_percent*CP/100, 0) + " W")],
+            "LT2": [LT2_pace_without_unit, str(round(0.95*CP, 0) + " W")],
+            "VC": [CS_pace_without_unit, str(round(CP, 0) + " W")]
         }
     else :
         pace_values = {
@@ -1580,6 +1578,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
