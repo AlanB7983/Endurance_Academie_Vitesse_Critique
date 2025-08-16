@@ -1016,7 +1016,7 @@ else :
     st.markdown("### Saisie des données de course")         
  
     # Sélection du nombre de résultats de course
-    st.markdown("**Nombre de rsultats de course à entrer :**") 
+    st.markdown("**Nombre de résultats de course à entrer :**") 
     num_points = st.radio("", [2, 3], horizontal = True, index = 0, label_visibility="collapsed")
 
         
@@ -1025,7 +1025,7 @@ else :
     
     
     # Entrée utilisateur
-    st.markdown("**Valeurs des tests :**") 
+    st.markdown("**Valeurs des résultats :**") 
 
     # On coche si on veut renseigner les puissances également
     use_power_data = st.checkbox("Ajouter les puissances moyennes associées (si disponibles et mesurées via un pod)")
@@ -1088,11 +1088,11 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 and powers[num_points-1] != 10 :
+        if distances[-1] != 170000 and times[-1] != 86400 and powers[-1] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 :
+        if distances[-1] != 170000 and times[-1] != 86400 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1612,6 +1612,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
