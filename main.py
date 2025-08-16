@@ -958,7 +958,7 @@ if methode == "Utiliser des données de test" :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 1000
+                    d = 10
                 else :
                     d = float(d)
                     
@@ -966,7 +966,7 @@ if methode == "Utiliser des données de test" :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 180
+                    t = 10
                 else :
                     t = float(t)
             
@@ -987,14 +987,14 @@ if methode == "Utiliser des données de test" :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 180
+                    t = 10
                 else :
                     t = float(t)
             with col3:
                 p = st.text_input(f"Puissance moyenne {i+1} (W)", placeholder="0")
     
                 if len(p) == 0 :
-                    p = 500
+                    p = 10
                 else :
                     p = float(p)
             
@@ -1003,11 +1003,11 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[0] != 10 :
+        if distances[0] != 10 and times[0] != 10 and powers[0} != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 10 :
+        if distances[0] != 10 and times[0] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1297,9 +1297,9 @@ if st.session_state.CS is not None:
     st.write("📌 Indice de durabilité estimé : " + str(Durability) + " %")
     
     if Durability > 90 :
-        st.info("Profil ENDURANT")
+        st.success("Profil ENDURANT")
     else :
-        st.info("Profil RAPIDE")
+        st.success("Profil RAPIDE")
 
     st.write("\n\n")  # Deux lignes vides
     st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
@@ -1355,9 +1355,6 @@ if st.session_state.CS is not None:
         
         power_law_fig.write_image(Power_Law_graph_path, scale=4) 
         
-        st.write("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). Les records saisis permettent de déterminer cette courbe, puis à estimer les vitesses théoriquement soutenables sur 5′ et 12′ afin de calculer la vitesse critique à partir de durées recommandées par la littérature. La précision du calcul de la vitesse critique est donc meilleure si les records sont relativement proches de 12′ (p. ex. 5 km et 10 km plutôt que semi-marathon et marathon).")
-        st.write("Le modèle de power law permet aussi d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
-
         # On affiche la légende du graphe
         st.markdown(
             "<p style='text-align: center; font-size:15px; color:darkgray; font-style:italic;'>"
@@ -1365,6 +1362,11 @@ if st.session_state.CS is not None:
             "</p>",
             unsafe_allow_html=True
         )
+        st.write("\n\n")  # Deux lignes vides
+        
+        st.write("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). Les records saisis permettent de déterminer cette courbe, puis à estimer les vitesses théoriquement soutenables sur 5′ et 12′ afin de calculer la vitesse critique à partir de durées recommandées par la littérature. La précision du calcul de la vitesse critique est donc meilleure si les records sont relativement proches de 12′ (p. ex. 5 km et 10 km plutôt que semi-marathon et marathon).")
+        st.write("Le modèle de power law permet aussi d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
+
         st.write("\n\n")  # Deux lignes vides
 
 # =============================================================================
@@ -1381,7 +1383,7 @@ if st.session_state.fig is not None:
 
 
     # Champ pour le nom du fichier
-    file_name = st.text_input("Nom du fichier PDF :", placeholder="Bilan Profil Force-Vitesse.pdf")
+    file_name = st.text_input("Nom du fichier PDF :", placeholder="Bilan_Vitesse_Critique.pdf")
     
     # Définir un état pour détecter le téléchargement
     if "pdf_downloaded" not in st.session_state:
@@ -1412,7 +1414,7 @@ else :
 # CALIBRAGE D'UNE SEANCE HIT (> CS)
 # =============================================================================
 st.write("\n\n")  # Deux lignes vides
-
+st.write("\n\n")  # Deux lignes vides
 st.write("")
 st.subheader("CALIBRAGE D'UNE SEANCE HIT (> CS)")
 
@@ -1579,6 +1581,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
