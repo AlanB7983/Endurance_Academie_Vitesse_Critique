@@ -208,7 +208,7 @@ def generate_training_zone_graph(pace_values, use_power_data):
     ))
     rpe_value = rpe_values[0]
     fig.add_annotation(
-        x=2,5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
+        x=2.5, y=-0.3, text=f"RPE<br>{rpe_value}", showarrow=False, font=dict(size=11, color=rpe_colors[0])
     )
     
     fig.add_trace(go.Scatter(
@@ -1579,6 +1579,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
