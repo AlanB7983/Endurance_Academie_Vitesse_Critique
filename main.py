@@ -979,7 +979,7 @@ if methode == "Utiliser des données de test" :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 10
+                    d = 170000
                 else :
                     d = float(d)
                     
@@ -987,7 +987,7 @@ if methode == "Utiliser des données de test" :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 10
+                    t = 86400
                 else :
                     t = float(t)
             with col3:
@@ -1003,7 +1003,7 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[num_points-1] != 10 and times[num_points-1] != 10 and powers[num_points-1] != 10 :
+        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 and powers[num_points-1] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
@@ -1042,7 +1042,7 @@ else :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 10
+                    d = 170000
                 else :
                     d = float(d)
                     
@@ -1050,7 +1050,7 @@ else :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 10
+                    t = 86400
                 else :
                     t = float(t)
             
@@ -1064,7 +1064,7 @@ else :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 10
+                    d = 170000
                 else :
                     d = float(d)
                     
@@ -1072,7 +1072,7 @@ else :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 10
+                    t = 86400
                 else :
                     t = float(t)
             with col3:
@@ -1088,11 +1088,11 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        if distances[num_points-1] != 10 and times[num_points-1] != 10 and powers[num_points-1] != 10 :
+        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 and powers[num_points-1] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[num_points-1] != 10 and times[num_points-1] != 10 :
+        if distances[num_points-1] != 170000 and times[num_points-1] != 86400 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1306,7 +1306,7 @@ if st.session_state.CS is not None:
             <div style="
                 padding: 1rem 1.25rem;
                 border: 1px solid #badbcc;
-                background: #d1e7dd;
+                background: #a8c686;
                 color: #0f5132;
                 border-radius: 0.5rem;
                 text-align: center;
@@ -1316,13 +1316,13 @@ if st.session_state.CS is not None:
             </div>
             """, unsafe_allow_html=True)
         
-        st.success("Profil ENDURANT")
+        # st.success("Profil ENDURANT")
     else :
         st.markdown("""
             <div style="
                 padding: 1rem 1.25rem;
                 border: 1px solid #badbcc;
-                background: #d1e7dd;
+                background: #a8c686;
                 color: #0f5132;
                 border-radius: 0.5rem;
                 text-align: center;
@@ -1331,7 +1331,7 @@ if st.session_state.CS is not None:
               Profil RAPIDE
             </div>
             """, unsafe_allow_html=True)
-        st.success("Profil RAPIDE")
+        # st.success("Profil RAPIDE")
 
     st.write("\n\n")  # Deux lignes vides
     st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
@@ -1613,6 +1613,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
