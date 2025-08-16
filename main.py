@@ -1411,6 +1411,7 @@ else :
 # =============================================================================
 # CALIBRAGE D'UNE SEANCE HIT (> CS)
 # =============================================================================
+st.write("\n\n")  # Deux lignes vides
 
 st.write("")
 st.subheader("CALIBRAGE D'UNE SEANCE HIT (> CS)")
@@ -1578,6 +1579,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
