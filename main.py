@@ -979,7 +979,7 @@ if methode == "Utiliser des données de test" :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 1000
+                    d = 10
                 else :
                     d = float(d)
                     
@@ -1003,11 +1003,11 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[0] != 1000 :
+        if distances[0] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 1000 :
+        if distances[0] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1042,7 +1042,7 @@ else :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 1000
+                    d = 10
                 else :
                     d = float(d)
                     
@@ -1064,7 +1064,7 @@ else :
                 
                 # Conversion en floatant et en mètre pour pouvoir réaliser les opérations
                 if len(d) == 0 :
-                    d = 1000
+                    d = 10
                 else :
                     d = float(d)
                     
@@ -1088,11 +1088,11 @@ else :
             powers.append(p)
     # st.write(race_distances)
     if use_power_data :
-        if distances[0] != 1000 :
+        if distances[0] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[0] != 1000 :
+        if distances[0] != 10 :
             distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1301,7 +1301,7 @@ if st.session_state.CS is not None:
     else :
         st.info("Profil RAPIDE")
 
-
+    st.write("\n\n")  # Deux lignes vides
     st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
@@ -1579,6 +1579,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
