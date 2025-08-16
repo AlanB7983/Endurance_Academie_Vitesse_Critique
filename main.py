@@ -966,7 +966,7 @@ if methode == "Utiliser des données de test" :
                 t = st.text_input(f"Temps {i+1} (s)", placeholder="0")
         
                 if len(t) == 0 :
-                    t = 10
+                    t = 100000
                 else :
                     t = float(t)
             
@@ -1003,11 +1003,11 @@ if methode == "Utiliser des données de test" :
             powers.append(p)
             
     if use_power_data :
-        if distances[num_points-1] != 10 and times[num_points-1] != 10 and powers[num_points-1] != 10 :
+        if distances[num_points-1] != 10 and times[num_points-1] != 100000 and powers[num_points-1] != 10 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
-        if distances[num_points-1] != 10 and times[num_points-1] != 10 :
+        if distances[num_points-1] != 10 and times[num_points-1] != 100000 :
             temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
@@ -1106,27 +1106,14 @@ if "CS" not in st.session_state:
 
 # Calcul de la vitesse critique
 # On initialise les valeurs
-if use_power_data :
-    if distances[num_points-1] == 10 and times[num_points-1] == 10 and powers[num_points-1] == 10 :
-        CS = 3
-        D_prime_0 = 100
-        speeds = [0]
-        CP = 10
-        W_prime_0 = 100
-    else :
-        # On met à jour en calculant avec les données de test
-        CS, D_prime_0, speeds, CP, W_prime_0 = calculate_critical_speed(distances, times, use_power_data, powers)
+CS = 3
+D_prime_0 = 100
+speeds = [0]
+CP = 10
+W_prime_0 = 100
 
-else :
-    if distances[num_points-1] == 10 and times[num_points-1] == 10 :
-        CS = 3
-        D_prime_0 = 100
-        speeds = [0]
-        CP = 10
-        W_prime_0 = 100
-    else :
-        # On met à jour en calculant avec les données de test
-        CS, D_prime_0, speeds, CP, W_prime_0 = calculate_critical_speed(distances, times, use_power_data, powers)
+# On met à jour en calculant avec les données de test
+CS, D_prime_0, speeds, CP, W_prime_0 = calculate_critical_speed(distances, times, use_power_data, powers)
 
 
 # Calcul du point CS_5min
@@ -1599,6 +1586,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
