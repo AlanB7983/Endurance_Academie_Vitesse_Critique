@@ -1132,6 +1132,7 @@ CS_kmh = speed_m_s_to_kmh(CS)
 CS_pace = speed_to_pace(CS)
 
 st.write(CS)
+st.write(num_points)
 
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
@@ -1583,6 +1584,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
