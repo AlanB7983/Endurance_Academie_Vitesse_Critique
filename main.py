@@ -1133,8 +1133,6 @@ df_test = pd.DataFrame({"Distance [m]": distances, "Temps [s]": times, "Allure m
 CS_kmh = speed_m_s_to_kmh(CS)
 CS_pace = speed_to_pace(CS)
 
-st.write(CS)
-st.write(num_points)
 
 # Bouton pour calculer la vitesse critique
 if st.button("Calculer la Vitesse Critique"):
@@ -1306,7 +1304,7 @@ if st.session_state.CS is not None:
             <div style="
                 padding: 1rem 1.25rem;
                 border: 1px solid #badbcc;
-                background: #a8c686;
+                background: #D4E3C5;
                 color: #0f5132;
                 border-radius: 0.5rem;
                 text-align: center;
@@ -1322,8 +1320,8 @@ if st.session_state.CS is not None:
             <div style="
                 padding: 1rem 1.25rem;
                 border: 1px solid #badbcc;
-                background: #a8c686;
-                color: #0f5132;
+                background: #BD6C47;
+                color: #453e3b;
                 border-radius: 0.5rem;
                 text-align: center;
                 font-weight: 500;
@@ -1334,6 +1332,7 @@ if st.session_state.CS is not None:
         # st.success("Profil RAPIDE")
 
     st.write("\n\n")  # Deux lignes vides
+    st.write("")  # Deux lignes vides
     st.write("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).")
     LT2_speed = 0.95*CS
     LT2_pace = speed_to_pace(LT2_speed)
@@ -1613,6 +1612,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
