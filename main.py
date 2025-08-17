@@ -432,7 +432,7 @@ def header_footer(canvas, doc):
     
     
     
-def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_law_graph_path) :
+def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_law_graph_path, afficher_power_law) :
     buffer = BytesIO()
     
     
@@ -545,14 +545,14 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
     if use_power_data :
         L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m / J]", "Indice de durabilité [%]", "Puissance critique [W]"],
-                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace), str(int(round(D_prime_0, 0))) + " / " + str(int(round(W_prime_0, 0))), str(Durability), str(int(round(CP, 0)))]
+                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))) + " / " + str(int(round(W_prime_0, 0))), str(Durability), str(int(round(CP, 0)))]
                       ]
     else :
         L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m]", "Indice de durabilité [%]"],
-                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace), str(int(round(D_prime_0, 0))), str(Durability)]
+                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))), str(Durability)]
                       ]
     
-    col_widths_2 = [100, 100]
+    col_widths_2 = [110, 110]
     
     #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
     table_result_VC = create_table(L_result_VC, col_widths_2)
@@ -597,33 +597,36 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(legend)
 
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+
+    # POWER LAW
+    if afficher_power_law :
+        subtitle_4 = Paragraph("Power law et temps limites", subtitle2_style)
+        elements.append(subtitle_4)
+        text = Paragraph("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). ", normal_style)
+        elements.append(text)    
+        
+        Power_law_graph = Image(Power_law_graph_path)
+        Power_law_graph.drawHeight = graph_width * Power_law_graph.drawHeight / Power_law_graph.drawWidth
+        Power_law_graph.drawWidth = graph_width
     
-    subtitle_4 = Paragraph("Power law et temps limites", subtitle2_style)
-    elements.append(subtitle_4)
-    text = Paragraph("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). ")
-    elements.append(text)    
-    text = Paragraph("Ce modèle permet notamment d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
-    elements.append(text)    
-
-    Power_law_graph = Image(Power_law_graph_path)
-    Power_law_graph.drawHeight = page_width * Power_law_graph.drawHeight / Power_law_graph.drawWidth
-    Power_law_graph.drawWidth = page_width
-
-    elements.append(Power_law_graph)
-    legend = Paragraph("Figure 3 : Power law", legend_style)
-    elements.append(legend)
-
-    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
-
-    col_widths_3 = [120, 120]
-    #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
-    table_estimation = create_table(L_estim, col_widths_3)
-
+        elements.append(Power_law_graph)
+        legend = Paragraph("Figure 3 : Power law", legend_style)
+        elements.append(legend)
     
-    elements.append(table_estimation)
-    legend = Paragraph("Tableau 3 : Estimation des temps et allures sur différentes distances à partir de la power law", legend_style)
-    elements.append(legend)
-    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+        elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+    
+        text = Paragraph("Ce modèle permet notamment d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.", normal_style)
+        elements.append(text)    
+    
+        col_widths_3 = [120, 120]
+        #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
+        table_estimation = create_table(L_estim, col_widths_3)
+    
+        
+        elements.append(table_estimation)
+        legend = Paragraph("Tableau 3 : Estimation des temps et allures sur différentes distances à partir de la power law", legend_style)
+        elements.append(legend)
+        elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
     
     # Génération du PDF
@@ -1464,7 +1467,7 @@ st.markdown("### Télécharger le rapport pdf") # Partie
 # Bouton télécharger
 # On fait l'export si le graphe existe
 if st.session_state.fig is not None:
-    pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_Law_graph_path)
+    pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_Law_graph_path, afficher_power_law)
 
     
     # Champ pour le nom du fichier
@@ -1666,6 +1669,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
