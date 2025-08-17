@@ -1418,7 +1418,7 @@ if st.session_state.CS is not None:
             "VC": CS_pace_without_unit
         }
     fig_domaines = generate_training_zone_graph(pace_values, use_power_data)
-    st.plotly_chart(fig_domaines, use_container_width=False)
+    st.plotly_chart(fig_domaines, use_container_width=True)
 
     # On affiche la légende du graphe
     st.markdown(
@@ -1674,6 +1674,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
