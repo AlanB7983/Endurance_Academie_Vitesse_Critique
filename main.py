@@ -604,7 +604,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
         elements.append(Spacer(1, 24))  # Ajouter un espace après le titre
         subtitle_4 = Paragraph("Power law et temps limites", subtitle2_style)
         elements.append(subtitle_4)
-        text = Paragraph("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). ", normal_style)
+        text = Paragraph("La power law modélise la relation performance–temps (v(t)=A.t<sup>B</sup>).", normal_style)
         elements.append(text)    
         
         Power_law_graph = Image(Power_law_graph_path)
@@ -1674,6 +1674,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
