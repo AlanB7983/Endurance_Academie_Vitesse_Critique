@@ -204,7 +204,7 @@ def generate_training_zone_graph(pace_values, use_power_data):
             ))
             fig.add_annotation(
                 x=indice, y=1.40, text=f"{label}<br>{pace[0]}<br>{pace[1]}", showarrow=False,
-                font=dict(size=10, color="#453E3B")
+                font=dict(size=9, color="#453E3B")
             )
     else :
         for i, (label, pace) in enumerate(pace_values.items()):
@@ -1433,7 +1433,7 @@ if st.session_state.CS is not None:
     Domaines_graph_path = "Temp/Domaines_graph.png"
     save_dir = os.path.dirname(Domaines_graph_path)
     
-    fig_domaines.write_image(Domaines_graph_path, scale=2) 
+    fig_domaines.write_image(Domaines_graph_path, scale=4) 
     
     st.write("\n")
     afficher_power_law = st.checkbox("Afficher la power law")
@@ -1674,6 +1674,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
