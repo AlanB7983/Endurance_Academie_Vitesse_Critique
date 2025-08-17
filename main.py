@@ -582,7 +582,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     subtitle_3 = Paragraph("Domaines d'intensité", subtitle2_style)
     elements.append(subtitle_3)
 
-    text = Paragraph("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. [2], ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).", normal_style)
+    text = Paragraph("La vitesse critique marque la transition entre le domaine d'intensité élevé et le domaine d'intensité sevère. Le diagramme ci-dessous représente les domaines d'intensité de l'athlète basés sur la vitesse critique. Les valeurs associées au premier seuil de lactate (LT1) et au second seuil de lactate (LT2) sont placé à des pourcentages arbitraires de la vitesse critique. Pour le premier seuil, ce pourcentage est calculé à partir de la valeur de la vitesse critique, en se basant sur l'étude de Ben Hunter et al. (PMID: 39048094), ajusté en fonction de l'indice de durabilité calculé. Il s'agit d'un point de départ à ajuster avec l'entraînement, à défaut d'avoir recours à des méthodes plus précises (mesure du lactate ou de la ventilation).", normal_style)
     elements.append(text)                 
     
     # elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
@@ -600,6 +600,8 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
 
     # POWER LAW
     if afficher_power_law :
+        elements.append(PageBreak())
+        elements.append(Spacer(1, 24))  # Ajouter un espace après le titre
         subtitle_4 = Paragraph("Power law et temps limites", subtitle2_style)
         elements.append(subtitle_4)
         text = Paragraph("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). ", normal_style)
@@ -617,7 +619,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     
         text = Paragraph("Ce modèle permet notamment d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.", normal_style)
         elements.append(text)    
-        elements.append(Spacer(1, 12)) 
+        elements.append(Spacer(1, 24)) 
     
         col_widths_3 = [120, 120]
         #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
@@ -1672,6 +1674,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
