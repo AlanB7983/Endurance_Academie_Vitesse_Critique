@@ -544,15 +544,15 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
     if use_power_data :
-        L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m / J]", "Indice de durabilité [%]", "Puissance critique [W]"],
-                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))) + " / " + str(int(round(W_prime_0, 0))), str(Durability), str(int(round(CP, 0)))]
+        L_result_VC = [["Vitesse critique [km/h | min/km]", "Résèrve anaérobie [m | J]", "Indice de durabilité [%]", "Puissance critique [W]"],
+                       [str(round(CS_kmh, 2)) + " | " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))) + " | " + str(int(round(W_prime_0, 0))), str(Durability), str(int(round(CP, 0)))]
                       ]
     else :
-        L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m]", "Indice de durabilité [%]"],
-                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))), str(Durability)]
+        L_result_VC = [["Vitesse critique [km/h | min/km]", "Résèrve anaérobie [m]", "Indice de durabilité [%]"],
+                       [str(round(CS_kmh, 2)) + " | " + str(CS_pace)[:-7], str(int(round(D_prime_0, 0))), str(Durability)]
                       ]
     
-    col_widths_2 = [110, 110]
+    col_widths_2 = [112, 112]
     
     #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
     table_result_VC = create_table(L_result_VC, col_widths_2)
@@ -617,6 +617,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     
         text = Paragraph("Ce modèle permet notamment d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.", normal_style)
         elements.append(text)    
+        elements.append(Spacer(1, 12)) 
     
         col_widths_3 = [120, 120]
         #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
@@ -1456,6 +1457,8 @@ if st.session_state.CS is not None:
         st.write("Le modèle de power law permet aussi d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
 
         st.write("\n\n")  # Deux lignes vides
+    else :
+        Power_Law_graph_path = ""
 
 # =============================================================================
 # TELECHARGER LE RAPPORT PDF
@@ -1669,6 +1672,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
