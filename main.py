@@ -432,7 +432,7 @@ def header_footer(canvas, doc):
     
     
     
-def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path) :
+def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_law_graph_path) :
     buffer = BytesIO()
     
     
@@ -498,13 +498,6 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     elements.append(Spacer(1, 6))  # Ajouter un espace après le texte
 
     # TABLEAU DES VALEURS DE TEST
-
-    # nouveaux_noms_athlete_profile = [
-    #     Paragraph('Distance [m]', normal_style),
-    #     Paragraph('Temps [s]', normal_style),
-    # ]
-    
-    # df_athlete_profile.columns = nouveaux_noms_athlete_profile
   
     # Convertir le DataFrame en une liste de listes
     L_test = [df_test.columns.tolist()] + df_test.values.tolist()    
@@ -533,9 +526,7 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     subtitle_2 = Paragraph("Résultats de vitesse critique", subtitle2_style)
     elements.append(subtitle_2)
     #elements.append(Spacer(1, 6))  # Ajouter un espace entre les graphes
-  
-    # On affiche le graphe d'évolution de l'effort dans la liaison boulonnée en fonction de l'effort extérieur dans le cas où la thermique est prise en compte
-    # scale_factor = 0.8  # Réduction de 5%
+
 
     # Ajustement de la largeur et de la hauteur du graphe 
     graph_width = (page_width - 2 * inch) # * scale_factor
@@ -544,19 +535,30 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     CS_graph.drawWidth = graph_width
 
     elements.append(CS_graph)
-    
-    # Centrage du graphe via un tableau
-    # table = Table([[CS_graph]], colWidths=[page_width - 2 * inch])
-    # table.setStyle(TableStyle([
-    #     ('ALIGN', (0, 0), (-1, -1), 'CENTER')  # Centrer le graphe
-    # ]))
-    
-    # elements.append(table)  # Ajout du graphe centré
+
 
     legend = Paragraph("Figure 1 : Courbe de vitesse critique", legend_style)
     elements.append(legend)
     
     elements.append(Spacer(1, 12))  # Ajouter un espace entre les graphes
+    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+
+    if use_power_data :
+        L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m / J]", "Indice de durabilité [%]", "Puissance critique [W]"],
+                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace), str(int(round(D_prime_0, 0))) + " / " + str(int(round(W_prime_0, 0))), str(Durability), str(int(round(CP, 0)))]
+                      ]
+    else :
+        L_result_VC = [["Vitesse critique [km/h / min/km]", "Résèrve anaérobie [m]", "Indice de durabilité [%]"],
+                       [str(round(CS_kmh, 2)) + " / " + str(CS_pace), str(int(round(D_prime_0, 0))), str(Durability)]
+                      ]
+    
+    col_widths_2 = [100, 100]
+    
+    #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
+    table_result_VC = create_table(L_result_VC, col_widths_2)
+    elements.append(table_result_VC)
+    legend = Paragraph("Tableau 2 : Résumé des résultats associés à la vitesse critique", legend_style)
+    elements.append(legend)
     elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
     text = Paragraph("La vitesse critique de l'athlète est de " + str(round(CS_kmh, 2)) + " km/h, soit " + str(CS_pace) + ".", normal_style)
@@ -598,6 +600,30 @@ def create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Dura
     
     subtitle_4 = Paragraph("Power law et temps limites", subtitle2_style)
     elements.append(subtitle_4)
+    text = Paragraph("La power law modélise la relation performance–temps ($v(t)=A\cdot t^{B}$). ")
+    elements.append(text)    
+    text = Paragraph("Ce modèle permet notamment d’estimer un chrono sur d’autres distances. L’estimation est d’autant plus fiable qu’un record proche de la distance cible est fourni (p. ex. marathon à partir d’un semi-marathon plutôt que d’un 5 km). En outre, la power law permet de calculer le temps limite théorique associé à chaque vitesse, ce qui en fait un outil complémentaire à la vitesse critique intéressant pour concevoir des séances d’entraînement.")
+    elements.append(text)    
+
+    Power_law_graph = Image(Power_law_graph_path)
+    Power_law_graph.drawHeight = page_width * Power_law_graph.drawHeight / Power_law_graph.drawWidth
+    Power_law_graph.drawWidth = page_width
+
+    elements.append(Power_law_graph)
+    legend = Paragraph("Figure 3 : Power law", legend_style)
+    elements.append(legend)
+
+    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
+
+    col_widths_3 = [120, 120]
+    #table_athlete_profile = Table(L_athlete_profile, colWidths=col_widths)
+    table_estimation = create_table(L_estim, col_widths_3)
+
+    
+    elements.append(table_estimation)
+    legend = Paragraph("Tableau 3 : Estimation des temps et allures sur différentes distances à partir de la power law", legend_style)
+    elements.append(legend)
+    elements.append(Spacer(1, 12))  # Ajouter un espace après le texte
 
     
     # Génération du PDF
@@ -691,6 +717,8 @@ def powerlaw_vitesse_et_puissance_append_points(
       t_out : t + [300, 1200] (s)
       p_out : p + [P_5', P_20'] (W)
       fig   : figure Plotly (vitesse vs temps)
+      estims: liste de listes [[Distance, Temps estimé, Allure], ...]
+              pour 5 km, 10 km, Semi-marathon, Marathon
     """
     # --- validations ---
     if not (len(d) == len(t) == len(p)):
@@ -725,6 +753,26 @@ def powerlaw_vitesse_et_puissance_append_points(
     d_out = [d_5_m, d_20_m]
     t_out = [t_short, t_long]
     p_out = [P_5, P_20]
+
+
+    # Estimation des records
+    distances_km_labels = [
+        (5.0, "5 km"),
+        (10.0, "10 km"),
+        (21.0975, "Semi-marathon"),
+        (42.195, "Marathon"),
+    ]
+
+    estims = []
+    for s_km, label in distances_km_labels:
+        # distance s = (A_v/3600) * t^(B_v+1)  =>  t = ((s*3600)/A_v)^(1/(B_v+1))
+        t_hat = ((s_km * 3600.0) / A_v) ** (1.0 / (B_v + 1.0))
+        v_hat_kmh = A_v * (t_hat ** B_v)
+        time_str = _fmt_hhmmss(t_hat)          # ex: "00:42:30"
+        pace_str = _pace_str_from_kmh(v_hat_kmh)  # ex: "04:15 /km"
+        estims.append([label, time_str, pace_str])
+
+    
 
     # --- figure (uniquement vitesse) ---
     t_min = 0.8 * min(min(t), t_short)
@@ -806,7 +854,7 @@ def powerlaw_vitesse_et_puissance_append_points(
     #    margin=dict(l=40, r=20, t=60, b=40)
     #)
 
-    return d_out, t_out, p_out, fig
+    return d_out, t_out, p_out, fig, estims
 
 
 
@@ -950,6 +998,8 @@ if methode == "Utiliser des données de test" :
     distances = []
     times = []
     powers = []
+
+    
     
     for i in range(num_points):
         if use_power_data == False :
@@ -1005,11 +1055,11 @@ if methode == "Utiliser des données de test" :
             
     if use_power_data :
         if distances[num_points-1] != 170000 and times[num_points-1] != 86400 and powers[num_points-1] != 10 :
-            temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
+            temp_distances, temp_times, temp_powers, power_law_fig, L_estim = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
         if distances[num_points-1] != 170000 and times[num_points-1] != 86400 :
-            temp_distances, temp_times, temp_powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
+            temp_distances, temp_times, temp_powers, power_law_fig, L_estim = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
 
@@ -1090,11 +1140,11 @@ else :
     # st.write(race_distances)
     if use_power_data :
         if distances[-1] != 170000 and times[-1] != 86400 and powers[-1] != 10 :
-            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
+            distances, times, powers, power_law_fig, L_estim = powerlaw_vitesse_et_puissance_append_points(distances,times,powers,t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
     else :
         if distances[-1] != 170000 and times[-1] != 86400 :
-            distances, times, powers, power_law_fig = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
+            distances, times, powers, power_law_fig, L_estim = powerlaw_vitesse_et_puissance_append_points(distances,times,[2.0, 1.0],t_short = 300.0,t_long = 720.0)
             #st.plotly_chart(power_law_fig, use_container_width=True)
 
 
@@ -1414,9 +1464,9 @@ st.markdown("### Télécharger le rapport pdf") # Partie
 # Bouton télécharger
 # On fait l'export si le graphe existe
 if st.session_state.fig is not None:
-    pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path)
+    pdf_buffer = create_pdf_template(df_test, CS_pace, CS_kmh, D_prime_0, CS_graph_path, Durability, Domaines_graph_path, use_power_data, CP, W_prime_0, L_estim, Power_Law_graph_path)
 
-
+    
     # Champ pour le nom du fichier
     file_name = st.text_input("Nom du fichier PDF :", placeholder="Bilan_Vitesse_Critique.pdf")
     
@@ -1616,6 +1666,7 @@ if st.session_state.session:
     if st.button("Réinitialiser la séance"):
         st.session_state.session = []
         st.rerun()
+
 
 
 
